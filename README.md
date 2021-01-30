@@ -11,7 +11,7 @@ Basitçe aşağıdaki komut yardımcı olacaktır.
 ```
 npm install
 ```
-## English? [<code><img height="18" width="40" src="https://raw.githubusercontent.com/hjnilsson/country-flags/master/svg/gb.svg"></code>](https://github.com/berkslv/react-redux-signalR/blob/master/README.md)
+## <code><img height="18" width="40" src="https://raw.githubusercontent.com/hjnilsson/country-flags/master/svg/gb.svg"></code> English? 
 English language support will be added soon. :(
 
 ## Proje durumu
