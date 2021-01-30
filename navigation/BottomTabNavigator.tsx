@@ -5,9 +5,9 @@ import * as React from 'react';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import TabOneScreen from '../screens/TabOneScreen';
+import PomodoroScreen from '../screens/PomodoroScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import { BottomTabParamList, PomodoroParamList, TabTwoParamList } from '../types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -15,12 +15,13 @@ export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
 
   return (
+    // Bottom [Alt] kısımdaki navigasyon
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="Pomodoro"
       tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
       <BottomTab.Screen
-        name="TabOne"
-        component={TabOneNavigator}
+        name="Pomodoro"
+        component={PomodoroNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
         }}
@@ -36,25 +37,26 @@ export default function BottomTabNavigator() {
   );
 }
 
-// You can explore the built-in icon families and icons on the web at:
-// https://icons.expo.fyi/
+// Icon için gerekli işlemler
+  // You can explore the built-in icon families and icons on the web at: https://icons.expo.fyi/
 function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>['name']; color: string }) {
   return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
 }
 
-// Each tab has its own navigation stack, you can read more about this pattern here:
-// https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const TabOneStack = createStackNavigator<TabOneParamList>();
+// Top [Üst] kısımdaki sadece isim belirteçleri. 
+  // Bir navigasyon belirtmiyor fakat isim için navigasyon alt yapısı kullanılıyor.
+  // Each tab has its own navigation stack, you can read more about this pattern here: https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
+const PomodoroStack = createStackNavigator<PomodoroParamList>();
 
-function TabOneNavigator() {
+function PomodoroNavigator() {
   return (
-    <TabOneStack.Navigator>
-      <TabOneStack.Screen
-        name="TabOneScreen"
-        component={TabOneScreen}
-        options={{ headerTitle: 'Tab One Title' }}
+    <PomodoroStack.Navigator>
+      <PomodoroStack.Screen
+        name="PomodoroScreen"
+        component={PomodoroScreen}
+        options={{ headerTitle: 'Pomodoro' }}
       />
-    </TabOneStack.Navigator>
+    </PomodoroStack.Navigator>
   );
 }
 

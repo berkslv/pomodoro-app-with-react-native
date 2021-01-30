@@ -6,9 +6,9 @@ export default {
     screens: {
       Root: {
         screens: {
-          TabOne: {
+          Pomodoro: {
             screens: {
-              TabOneScreen: 'one',
+              PomodoroScreen: 'one',
             },
           },
           TabTwo: {
