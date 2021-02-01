@@ -1,15 +1,20 @@
+/*
+  Amaç: Şuanlık işlevsiz. Settings ile değiştirilecek.
+  Son düzenlenme: 30/01/2021
+  Son düzenleyen: berk selvi
+*/
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 
-export default function TabTwoScreen() {
+export default function SettingsScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Tab Two</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="/screens/TabTwoScreen.tsx" />
+      <EditScreenInfo path="/screens/SettingsScreen.tsx" />
     </View>
   );
 }

@@ -5,13 +5,13 @@ export type RootStackParamList = {
 
 export type BottomTabParamList = {
   Pomodoro: undefined;
-  TabTwo: undefined;
+  Settings: undefined;
 };
 
 export type PomodoroParamList = {
   PomodoroScreen: undefined;
 };
 
-export type TabTwoParamList = {
-  TabTwoScreen: undefined;
+export type SettingsParamList = {
+  SettingsScreen: undefined;
 };

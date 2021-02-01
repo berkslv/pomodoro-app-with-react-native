@@ -6,5 +6,6 @@
 // Actions lar export edildi.
 export * from './timerSettings/timerSettingsActions';
 export * from './timer/timerActions';
+export * from './goal/goalActions';
 export * from './archive/archiveActions';
 export * from './userInterface/userInterfaceActions';

@@ -1,3 +1,8 @@
+/*
+  Amaç: Pomodoro ekranı.
+  Son düzenlenme: 30/01/2021
+  Son düzenleyen: berk selvi
+*/
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 
@@ -7,8 +12,6 @@ import { Text, View } from '../components/Themed';
 export default function PomodoroScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Pomodoro</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <Timer/>
     </View>
   );

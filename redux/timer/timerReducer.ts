@@ -22,19 +22,19 @@ const reducer = (state = initialState, action:any) => {
         case timerTypes.SET_CURRENT_PERIOD:
             return {
                 ...state,
-                counterDuration : action.payload
+                currentPeriod : action.payload
             }
         // Şuanki sayacın durumunu belirtmek için reducer tanımlandı.
         case timerTypes.SET_CURRENT_STATUS:
             return {
                 ...state,
-                counterStatus : action.payload
+                currentStatus : action.payload
             }
         // Bağımlılık anahtarı için reducer tanımlandı.
         case timerTypes.SET_TIMER_KEY:
             return {
                 ...state,
-                counterKey : action.payload
+                timerKey : action.payload
             }
         // Default durum tanımlandı.
         default: return state

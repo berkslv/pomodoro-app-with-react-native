@@ -22,7 +22,7 @@ export const setCounterStatus = ( status:string ) => {
 }
 
 // Bağımlılık anahtarı için action.
-export const setCounterKey = ( currentKey:number ) => {
+export const setTimerKey = ( currentKey:number ) => {
     return {
         type : timerTypes.SET_TIMER_KEY,
         payload : currentKey + 1
