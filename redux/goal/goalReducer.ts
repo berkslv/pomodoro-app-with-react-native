@@ -8,9 +8,9 @@ import { goalTypes, gaolState } from "./goalTypes";
 
 const initialState : gaolState = {
     // Günlük hedef için state.
-    dailyGoal : 12,
+    goalDaily : 12,
     // Küçük parça olan hedef için state.
-    littleGoal : 4,
+    goalLittle : 4,
 }
 
 
@@ -20,13 +20,13 @@ const reducer = (state = initialState, action:any) => {
         case goalTypes.SET_DAILY_GOAL:
             return {
                 ...state,
-                dailyGoal : action.payload
+                goalDaily : action.payload
             }
         // Küçük parça olan hedef için reducer.
         case goalTypes.SET_LITTLE_GOAL:
             return {
                 ...state,
-                littleGoal : action.payload
+                goalLittle : action.payload
             }
         // Default durum tanımlandı.
         default: return state

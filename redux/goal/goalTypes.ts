@@ -4,6 +4,6 @@ export const goalTypes = {
 }
 
 export type gaolState = {
-    dailyGoal : number,
-    littleGoal : number,
+    goalDaily : number,
+    goalLittle : number,
 }

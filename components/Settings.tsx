@@ -1,189 +1,228 @@
-import React from "react";
+import React, { Ref, useRef, useState } from "react";
 import {
   StyleSheet,
+  Text,
   View,
-  TouchableWithoutFeedback,
-  Keyboard,
-  Text
+  TextInput,
+  Linking,
+  ScrollView,
 } from "react-native";
-import { connect } from "react-redux";
 import {
-  setWorkDuration,
-  setShortBreakDuration,
-  setLongBreakDuration,
-  setCounterDuration,
-  setCounterKey,
-  setDailyGoal,
-  setLittleGoal,
-} from "../Redux";
-import SettingInput from "./Shared/SettingInput";
+  setDurationWork,
+  setDurationShortBreak,
+  setDurationLongBreak,
+  setGoalDaily,
+  setGoalLittle,
+  setTimerKey,
+  setCurrentActivity,
+  setCurrentPeriod
+} from "../redux";
+import { Ionicons } from '@expo/vector-icons';
+import { connect } from "react-redux";
+import { Formik } from "formik"; // DO npm uninstall formik
+import { TouchableOpacity, TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { pomodoroTypes } from "../constants/PomodoroTypes";
+import AboutUs from "./shared/AboutUs";
 
-// TODO iletişim bilgilerini ekle.
-// TODO Gelecek versiyonlarda siyah tema ekle
-// TODO Gelecek versiyonlarda in-app satın alma ekle. Bununla tasarım sat.
 
 const Settings = ({
   // states
   durationWork,
   durationShortBreak,
   durationLongBreak,
-  counterStatus,
-  counterKey,
-  dailyGoal,
-  littleGoal,
+  goalDaily,
+  goalLittle,
+  timerKey,
+  currentStatus,
   // functions
-  setWorkDuration,
-  setShortBreakDuration,
-  setLongBreakDuration,
-  setCounterDuration,
-  setCounterKey,
-  setDailyGoal,
-  setLittleGoal,
-}) => {
-  const timeFormater = (timeData) => {
-    return (timeData / 60).toString();
-  };
+  setDurationWork,
+  setDurationShortBreak,
+  setDurationLongBreak,
+  setGoalDaily,
+  setGoalLittle,
+  setTimerKey,
+  setCurrentPeriod,
+  setCurrentActivity,
+}: any) => {
+  const workTimeRef: any = useRef(null);
+  const shortBreakRef: any = useRef(null);
+  const longBreakRef: any = useRef(null);
 
-  const onChangeHandlerForTimes = (val, statusCode) => {
-    val = val * 60;
+  const goalLittleRef: any = useRef(null);
+  const goalDailyRef: any = useRef(null);
 
-    if (statusCode == 1) {
-      setWorkDuration(val);
-      if (counterStatus == 1) {
-        setCounterDuration(val);
-        setCounterKey(counterKey + 1);
-      }
-    } else if (statusCode == 2) {
-      setShortBreakDuration(val);
-      if (counterStatus == 2) {
-        setCounterDuration(val);
-        setCounterKey(counterKey + 1);
-      }
-    } else if (statusCode == 3) {
-      setLongBreakDuration(val);
-      if (counterStatus == 3) {
-        setCounterDuration(val);
-        setCounterKey(counterKey + 1);
-      }
-    } else {
-      console.log("some error occured on setting.js");
-    }
-  };
-
-  const onChangeHandlerForGoals = (val, statusCode) => {
-    if (statusCode == 1) {
-      setDailyGoal(val)
-      setCounterKey(counterKey + 1);
-    }
-    else if(statusCode == 2)
-    {
-      setLittleGoal(val)
-      setCounterKey(counterKey + 1);
+  const focusEvent = (ref: any) => {
+    if (ref.current) {
+      ref.current.focus();
     }
   }
 
+  const resetTimer = (e:any) => {
+    switch (currentStatus) {
+      case pomodoroTypes.WORK:
+        setCurrentPeriod(e);
+        break;
+      case pomodoroTypes.SHORT_BREAK:
+        setCurrentPeriod(e);
+        break;
+      case pomodoroTypes.LONG_BREAK:
+        setCurrentPeriod(e);
+        break;
+      default:
+        console.error("an error occur on setting switches");
+        break;
+    }
+
+    setTimerKey(timerKey);
+    setCurrentActivity(false);
+  }
+
+
   return (
-    <TouchableWithoutFeedback
-      onPress={() => {
-        Keyboard.dismiss();
-      }}
+    <ScrollView
+      contentContainerStyle={{ flexGrow: 1 }}
+      keyboardShouldPersistTaps="handled"
     >
-      <View style={styles.parentContainer}>
-        <View style={styles.container}>
-          <Text style={styles.formHeader}>Set times</Text>
-          <SettingInput
-            text={"Work time"}
-            data={timeFormater(durationWork)}
-            queue={false}
-            changeHandler={onChangeHandlerForTimes}
-            statusCode={1}
+      <View style={styles.inputParentContainer}>
+        <TouchableWithoutFeedback onPress={() => { focusEvent(workTimeRef) }} style={styles.inputContainer}>
+          <Text style={styles.inputText}>Work time</Text>
+          <TextInput
+            ref={workTimeRef}
+            style={styles.input}
+            placeholder="Work time"
+            value={durationWork.toString()}
+            onChangeText={(e) => { setDurationWork(e); resetTimer(e);}}
+            keyboardType="number-pad"
+            selectTextOnFocus
           />
-          <SettingInput
-            text={"Short break time"}
-            data={timeFormater(durationShortBreak)}
-            queue={false}
-            changeHandler={onChangeHandlerForTimes}
-            statusCode={2}
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback onPress={() => { focusEvent(shortBreakRef) }} style={styles.inputContainer}>
+          <Text style={styles.inputText}>Short break</Text>
+          <TextInput
+            ref={shortBreakRef}
+            style={styles.input}
+            placeholder="Work time"
+            onChangeText={(e) => { setDurationShortBreak(e); resetTimer(e);}}
+            value={durationShortBreak.toString()}
+            keyboardType="number-pad"
+            selectTextOnFocus
           />
-          <SettingInput
-            text={"Long break time"}
-            data={timeFormater(durationLongBreak)}
-            queue={true}
-            changeHandler={onChangeHandlerForTimes}
-            statusCode={3}
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback onPress={() => { focusEvent(longBreakRef) }} style={styles.inputLastContainer}>
+          <Text style={styles.inputText}>Long break</Text>
+          <TextInput
+            ref={longBreakRef}
+            style={styles.input}
+            placeholder="Work time"
+            onChangeText={(e) => { setDurationLongBreak(e); resetTimer(e);}}
+            value={durationLongBreak.toString()}
+            keyboardType="number-pad"
+            selectTextOnFocus
           />
-        </View>
-        <View style={styles.container}>
-          <Text style={styles.formHeader}>Pomodoro goal</Text>
-          <SettingInput
-            text={"Daily goal"}
-            data={dailyGoal.toString()}
-            queue={false}
-            changeHandler={onChangeHandlerForGoals}
-            statusCode={1}
-          />
-          <SettingInput
-            text={"Long break goal"}
-            data={littleGoal.toString()}
-            queue={true}
-            changeHandler={onChangeHandlerForGoals}
-            statusCode={2}
-          />
-        </View>
+        </TouchableWithoutFeedback>
       </View>
-    </TouchableWithoutFeedback>
+
+      <View style={styles.inputParentContainer}>
+        <TouchableWithoutFeedback onPress={() => { focusEvent(workTimeRef) }} style={styles.inputContainer}>
+          <Text style={styles.inputText}>Little goal</Text>
+          <TextInput
+            ref={goalLittleRef}
+            style={styles.input}
+            placeholder="Little goal"
+            value={goalLittle.toString()}
+            onChangeText={(e) => { setGoalLittle(e)}}
+            keyboardType="number-pad"
+            selectTextOnFocus
+          />
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback onPress={() => { focusEvent(shortBreakRef) }} style={styles.inputLastContainer}>
+          <Text style={styles.inputText}>Daily goal</Text>
+          <TextInput
+            ref={goalDailyRef}
+            style={styles.input}
+            placeholder="Daily goal"
+            onChangeText={(e) => { setGoalDaily(e)}}
+            value={goalDaily.toString()}
+            keyboardType="number-pad"
+            selectTextOnFocus
+          />
+        </TouchableWithoutFeedback>
+      </View>
+
+      <AboutUs />
+      
+    </ScrollView>
   );
 };
 
-const mapStateToProps = (state) => {
+// redux için state değişkenlerini map ediyoruz.
+const mapStateToProps = (state: any) => {
   return {
-    durationWork: state.counter.durationWork,
-    durationShortBreak: state.counter.durationShortBreak,
-    durationLongBreak: state.counter.durationLongBreak,
+    durationWork: state.timerSettings.durationWork,
+    durationShortBreak: state.timerSettings.durationShortBreak,
+    durationLongBreak: state.timerSettings.durationLongBreak,
 
-    counterStatus: state.counter.counterStatus,
-    counterKey: state.counter.counterKey,
-    
-    dailyGoal: state.counter.dailyGoal,
-    littleGoal: state.counter.littleGoal,
+    goalDaily: state.goal.goalDaily,
+    goalLittle: state.goal.goalLittle,
+
+    timerKey: state.timer.timerKey,
+    currentStatus: state.timer.currentStatus,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+// redux için fonksiyonları map ediyoruz.
+const mapDispatchToProps = (dispatch: any) => {
   return {
-    setWorkDuration: (durationWork) => dispatch(setWorkDuration(durationWork)),
-    setShortBreakDuration: (durationShortBreak) =>
-      dispatch(setShortBreakDuration(durationShortBreak)),
-    setLongBreakDuration: (durationLongBreak) =>
-      dispatch(setLongBreakDuration(durationLongBreak)),
+    setDurationWork: (durationWork: any) =>
+      dispatch(setDurationWork(durationWork)),
+    setDurationShortBreak: (durationShortBreak: any) =>
+      dispatch(setDurationShortBreak(durationShortBreak)),
+    setDurationLongBreak: (durationLongBreak: any) =>
+      dispatch(setDurationLongBreak(durationLongBreak)),
 
-    setCounterDuration: (statusCode) =>
-      dispatch(setCounterDuration(statusCode)),
-    setCounterKey: (currentKey) => dispatch(setCounterKey(currentKey)),
+    setGoalDaily: (goalDaily: any) => dispatch(setGoalDaily(goalDaily)),
+    setGoalLittle: (goalLittle: any) => dispatch(setGoalLittle(goalLittle)),
 
-    setDailyGoal: (dailyGoal) => dispatch(setDailyGoal(dailyGoal)),
-    setLittleGoal: (littleGoal) => dispatch(setLittleGoal(littleGoal)),
+    setTimerKey: (currentKey: any) => dispatch(setTimerKey(currentKey)),
+    setCurrentPeriod: (period: any) => dispatch(setCurrentPeriod(period)),
+    setCurrentActivity: (activity: boolean) => dispatch(setCurrentActivity(activity)),
   };
 };
 
+// redux bağlantısı kuruyoruz.
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);
 
 const styles = StyleSheet.create({
-  parentContainer:{
-    flex:1,
+  inputParentContainer: {
+    backgroundColor: "#141414",
+    paddingVertical: 5,
+    paddingHorizontal: 20,
+    flexDirection: "column",
+    marginTop: 30,
   },
-  container: {
-    paddingTop: 20,
-    paddingBottom: 30,
+  inputContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    borderBottomWidth: 1,
+    borderBottomColor: "#363636",
   },
-  text: {
-    fontSize: 23,
-    paddingLeft: 10,
+  inputLastContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
-  formHeader: {
-    padding: 5,
-    fontSize: 16,
-    color: "gray",
-  }
-  
+  input: {
+    padding: 10,
+    fontSize: 20,
+    color: "#ededed",
+    textAlign: "center",
+  },
+  inputText: {
+    flex: 1,
+    color: "#ffffff",
+    fontSize: 18,
+  },
 });

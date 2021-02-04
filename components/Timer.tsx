@@ -1,4 +1,10 @@
-import React, { useState, useEffect } from "react";
+/*
+  Amaç: Uygulamanın yürütüldüğü ana component. Neredeyse çoğu işlem 
+        buradan yapılıyor, pomodoro uygulaması buradan kullanıcıya sunuluyor.
+  Son düzenlenme: 02/02/2021
+  Son düzenleyen: berk selvi
+*/
+import React, { useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 import { connect } from "react-redux";
@@ -8,9 +14,10 @@ import {
   completedLongBreak,
   setFormatTime,
   setFormatTarget,
-  setCounterDuration,
-  setCounterStatus,
+  setCurrentPeriod,
+  setCurrentStatus,
   setTimerKey,
+  setCurrentActivity
 } from "../redux";
 import Circle from "./shared/Circle";
 import useColorScheme from '../hooks/useColorScheme';
@@ -26,9 +33,10 @@ const Counter = ({
   completedLongBreak,
   setFormatTime,
   setFormatTarget,
-  setCounterDuration,
-  setCounterStatus,
+  setCurrentPeriod,
+  setCurrentStatus,
   setTimerKey,
+  setCurrentActivity,
   // states
   workDB,
   durationWork,
@@ -37,105 +45,112 @@ const Counter = ({
   formatTime,
   formatTarget,
   currentPeriod,
+  currentActivity,
   timerKey,
-  dailyGoal,
-  littleGoal,
-} 
-: 
-{
-    // functions
-  completedWork : any,
-  completedShortBreak : any,
-  completedLongBreak : any,
-  setFormatTime : any,
-  setFormatTarget : any,
-  setCounterDuration : any,
-  setCounterStatus : any,
-  setTimerKey : any,
-  // states
-  workDB : any,
-  durationWork : any,
-  durationShortBreak : any,
-  durationLongBreak : any,
-  formatTime : any,
-  formatTarget : any,
-  currentPeriod : any,
-  timerKey : any,
-  dailyGoal : any,
-  littleGoal : any,
-}) => {
+  goalDaily,
+  goalLittle,
+}: any ) => {
   const theme = useColorScheme();
-  const [themeColor, setThemeColor] = useState((theme==="light")?lightThemeColors:darkThemeColors);
+  const [themeColor, setThemeColor] = useState((theme === "light") ? lightThemeColors : darkThemeColors);
   const [buttonCondition_Right, setButtonCondition_Right] = useState(START);
   const [buttonCondition_Left, setButtonCondition_Left] = useState(DISABLE);
-  const [counterActive, setCounterActive] = useState(false);
   const [counterColor, setCounterColor] = useState(themeColor.TIMER_WORK);
 
-  const buttonPressHandler = (currentCondition : string) => {
+  // Sayacın kontrol düğmelerinden parametre alarak işlemlere karar veriliyor. const olarak ifade geri dönüyor. 
+  // Örnek olarak eğer switch CANCEL girerse CANCEL düğmesine basılmıştır.
+  const buttonPressHandler = (currentCondition: string) => {
     switch (currentCondition) {
       case CANCEL:
         setTimerKey(timerKey + 1);
-        setCounterActive(false);
+        setCurrentActivity(false);
         setButtonCondition_Right(START);
         setButtonCondition_Left(DISABLE);
         break;
       case START:
-        setCounterActive(true);
+        setCurrentActivity(true);
         setButtonCondition_Right(PAUSE);
         setButtonCondition_Left(CANCEL);
         break;
       case RESUME:
-        setCounterActive(true);
+        setCurrentActivity(true);
         setButtonCondition_Right(PAUSE);
         break;
       case PAUSE:
-        setCounterActive(false);
+        setCurrentActivity(false);
         setButtonCondition_Right(RESUME);
       default:
         break;
     }
   };
 
+  // Sayaç tamamlandığı zaman işliyor. Sayaç componentinin içerisinden çağırılıyor.
   const counterCompleted = () => {
-    if ( currentPeriod == durationWork  && ( workDB.length % littleGoal != 0 || workDB.length == 0)  ) {
-      // work X shortBreak Y
-      completedWork();
+    if (currentPeriod == durationWork && ((workDB.length + 1) % goalLittle != 0 || workDB.length == 0)) {
+      // WORK bitti. SHORT_BREAK sıraya alındı.
 
+      // Reducer içerisinde workDB değişkenine yazıldı.
+      completedWork();
+      
+      // Sayacın durumu ve süresi güncellendi.
+      setCurrentStatus(pomodoroTypes.SHORT_BREAK);
+      setCurrentPeriod(durationShortBreak);
+
+      // Tasarımla ilgili güncelleme. Sayacın rengi değiştirildi.
       setCounterColor(themeColor.SHORT_BREAK);
-      setCounterDuration(durationShortBreak);
-      setCounterStatus(pomodoroTypes.SHORT_BREAK);
-    } else if ( currentPeriod == durationWork  && workDB.length % littleGoal == 0 && workDB.length != 0 ) {
-      // work X longBreak Y
+    } else if (currentPeriod == durationWork && (workDB.length + 1) % goalLittle == 0 && workDB.length != 0) {
+      // WORK bitti. LONG_BREAK sıraya alındı.
+
+      // Reducer içerisinde workDB değişkenine ekleme yapıldı.
       completedWork();
 
+      // Sayacın durumu ve süresi güncellendi.
+      setCurrentStatus(pomodoroTypes.LONG_BREAK);
+      setCurrentPeriod(durationLongBreak);
+
+      // Tasarımla ilgili güncelleme, Sayacın rengi değiştirildi.
       setCounterColor(themeColor.LONG_BREAK);
-      setCounterDuration(durationLongBreak);
-      setCounterStatus(3);
     } else if (currentPeriod == durationShortBreak) {
-      // shortBreak X work Y
+      // SHORT_BREAK bitti. WORK sıraya alındı.
+
+      // Reducer içerisinde shortBreakDB değişkenine ekleme yapıldı.
       completedShortBreak();
 
+      // Sayacın durumu ve süresi güncellendi.
+      setCurrentStatus(pomodoroTypes.WORK);
+      setCurrentPeriod(durationWork);
+
+      // Tasarımla ilgili güncelleme, Sayacın rengi değiştirildi.
       setCounterColor(themeColor.TIMER_WORK);
-      setCounterDuration(durationWork);
-      setCounterStatus(pomodoroTypes.WORK);
     } else if (currentPeriod == durationLongBreak) {
-      // longBreak X work Y
+      // LONG_BREAK bitti. WORK sıraya alındı.
+
+      // Reducer içerisinde longBreakDB değişkenine ekleme yapıldı.
       completedLongBreak();
 
+      // Sayacın durumu ve süresi güncellendi.
+      setCurrentStatus(pomodoroTypes.WORK);
+      setCurrentPeriod(durationWork);
+
+      // Tasarımla ilgili güncelleme, Sayacın rengi değiştirildi.
       setCounterColor(themeColor.TIMER_WORK);
-      setCounterStatus(pomodoroTypes.WORK);
-    }else {
+    } else {
+      // Herhangi bir hata oluşursa bildirildi.
       console.error("An error occur when counter completed");
       setCounterColor(themeColor.ERROR);
     }
 
+    // Sayacı sıfırlamak için paketle ilgili bir özellik. Sayacı sıfırlamak için bu değeri değiştirmemiz gerekiyor.
     setTimerKey(timerKey + 1);
-    setCounterActive(false);
+    // Sayacı pasif hale getiriyoruz.
+    setCurrentActivity(false);
+    // Sağdaki butonu START yapıyoruz.
     setButtonCondition_Right(START);
+    // Solcaki butonu DISABLE yapıyoruz.
     setButtonCondition_Left(DISABLE);
   };
 
-  const countdownTimeFormater = (remainingTime : any) => {
+  // Sayacın içerisinde gözüken süreyi formatlıyoruz. CountdownCircleTimer içerisinde çağırıyoruz.
+  const countdownTimeFormater = (remainingTime: any) => {
     let minutes = Math.floor(remainingTime / 60).toString();
     let seconds = (remainingTime % 60).toString();
 
@@ -145,12 +160,23 @@ const Counter = ({
     return `${minutes}:${seconds}`;
   };
 
+  // Ekrandaki bugün içerisindeki çalışma süresini belirten kartı formatlıyoruz.
   const screenTimeFormater = () => {
-    let totalMinute = workDB.length * 25; 
+    let totalMinute = 0;
+
+      // Sadece bugüne ait verileri alıyoruz.
+    workDB.forEach(( item:any ) => {
+      if( item.date.toDateString() == new Date().toDateString() )
+      {
+        // totalMinute += durationWork;
+        totalMinute += 25; // test için varım. İşlerin bitince bir üstteki kodu aç beni sil.
+      }
+    });
 
     let hour = Math.floor(totalMinute / 60).toString();
     let minute = (totalMinute % 60).toString();
 
+    // formatTime değişkeni userInterface reducer içerisinden geliyor. Kartın üzerine tıklanarak güncelleniyor.
     if (formatTime == 0) {
       if (hour == "0") {
         return minute + " minutes";
@@ -162,11 +188,23 @@ const Counter = ({
     }
   };
 
+  // Ekrandaki bugün içerisindeki yapılan ve yapılacak olan hedefi belirten kartı formatlıyoruz.
   const screenTargetFormater = () => {
+    // formatTarget değişkeni userInterface reducer içerisinden geliyor. Kartın üzerine tıklanarak güncelleniyor.
+    let completedWork = 0;
+
+    // Sadece bugüne ait verileri alıyoruz.
+    workDB.forEach(( item:any ) => {
+      if( item.date.toDateString() == new Date().toDateString() )
+      {
+        completedWork += 1;
+      }
+    });
+
     if (formatTarget == 0) {
-      return workDB.length + ` / ${dailyGoal}`;
+      return completedWork + ` / ${goalDaily}`;
     } else {
-      return workDB.length;
+      return completedWork;
     }
   };
 
@@ -174,7 +212,7 @@ const Counter = ({
     <View style={styles.container}>
       <View style={styles.countdownContainer}>
         <CountdownCircleTimer
-          isPlaying={counterActive}
+          isPlaying={currentActivity}
           duration={currentPeriod}
           size={270}
           key={timerKey}
@@ -186,7 +224,7 @@ const Counter = ({
         >
           {({ remainingTime }) => (
             <View style={styles.countdownTextContainer}>
-              <Text style={[styles.countdownText,{color: themeColor.SECONDARY}]}>
+              <Text style={[styles.countdownText, { color: themeColor.SECONDARY }]}>
                 {countdownTimeFormater(remainingTime)}
               </Text>
             </View>
@@ -201,21 +239,21 @@ const Counter = ({
         <View style={styles.cardContainer}>
           <TouchableOpacity
             activeOpacity={0.4}
-            style={[styles.card,{borderColor:themeColor.CARD_OUT,backgroundColor:themeColor.CARD_IN}]}
+            style={[styles.card, { borderColor: themeColor.CARD_OUT, backgroundColor: themeColor.CARD_IN }]}
             onPress={() => {
               formatTime == 0 ? setFormatTime(1) : setFormatTime(0);
             }}
           >
-            <Text style={[styles.cardText,{color:themeColor.CARD_TEXT}]}>{screenTimeFormater()}</Text>
+            <Text style={[styles.cardText, { color: themeColor.CARD_TEXT }]}>{screenTimeFormater()}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.4}
-            style={[styles.card,{borderColor:themeColor.CARD_OUT,backgroundColor:themeColor.CARD_IN}]}
+            style={[styles.card, { borderColor: themeColor.CARD_OUT, backgroundColor: themeColor.CARD_IN }]}
             onPress={() => {
               formatTarget == 0 ? setFormatTarget(1) : setFormatTarget(0);
             }}
           >
-            <Text style={[styles.cardText,{color:themeColor.CARD_TEXT}]}>{screenTargetFormater()}</Text>
+            <Text style={[styles.cardText, { color: themeColor.CARD_TEXT }]}>{screenTargetFormater()}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -223,7 +261,8 @@ const Counter = ({
   );
 };
 
-const mapStateToProps = (state : any) => {
+// redux için state değişkenlerini map ediyoruz.
+const mapStateToProps = (state: any) => {
   return {
     workDB: state.archive.workDB,
     shortBreakDB: state.archive.shortBreakDB,
@@ -237,28 +276,32 @@ const mapStateToProps = (state : any) => {
     formatTarget: state.userInterface.formatTarget,
 
     currentPeriod: state.timer.currentPeriod,
+    currentActivity: state.timer.currentActivity,
     timerKey: state.timer.timerKey,
 
-    dailyGoal: state.goal.dailyGoal,
-    littleGoal: state.goal.littleGoal,
+    goalDaily: state.goal.goalDaily,
+    goalLittle: state.goal.goalLittle,
   };
 };
 
-const mapDispatchToProps = (dispatch : any) => {
+// redux için fonksiyonları map ediyoruz.
+const mapDispatchToProps = (dispatch: any) => {
   return {
     completedWork: () => dispatch(completedWork()),
     completedShortBreak: () => dispatch(completedShortBreak()),
     completedLongBreak: () => dispatch(completedLongBreak()),
 
-    setFormatTime: (formatTime : any) => dispatch(setFormatTime(formatTime)),
-    setFormatTarget: (formatTarget : any) => dispatch(setFormatTarget(formatTarget)),
+    setFormatTime: (formatTime: any) => dispatch(setFormatTime(formatTime)),
+    setFormatTarget: (formatTarget: any) => dispatch(setFormatTarget(formatTarget)),
 
-    setCounterDuration: (duration : any) => dispatch(setCounterDuration(duration)),
-    setCounterStatus: (statusCode : any) => dispatch(setCounterStatus(statusCode)),
-    setTimerKey: (currentKey : any) => dispatch(setTimerKey(currentKey)),
+    setCurrentPeriod: (duration: any) => dispatch(setCurrentPeriod(duration)),
+    setCurrentStatus: (statusCode: any) => dispatch(setCurrentStatus(statusCode)),
+    setTimerKey: (currentKey: any) => dispatch(setTimerKey(currentKey)),
+    setCurrentActivity: (activity: boolean) => dispatch(setCurrentActivity(activity)),
   };
 };
 
+// redux bağlantısı kuruyoruz.
 export default connect(mapStateToProps, mapDispatchToProps)(Counter);
 
 const styles = StyleSheet.create({

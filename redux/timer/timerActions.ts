@@ -6,7 +6,7 @@
 import { timerTypes } from "./timerTypes";
 
 // Şuanki sayacın kaç saniye olduğunu belirtmek için action.
-export const setCounterDuration = ( period:number ) => {
+export const setCurrentPeriod = ( period:number ) => {
     return {
         type : timerTypes.SET_CURRENT_PERIOD,
         payload : period
@@ -14,10 +14,17 @@ export const setCounterDuration = ( period:number ) => {
 }
 
 // Şuanki sayacın durumunu belirtmek için action.
-export const setCounterStatus = ( status:string ) => {
+export const setCurrentStatus = ( status:string ) => {
     return {
         type : timerTypes.SET_CURRENT_STATUS,
         payload : status
+    }
+}
+// Şanki sayacın aktiflik durumunu belirtmek için action.
+export const setCurrentActivity = ( activity:boolean ) => {
+    return {
+        type : timerTypes.SET_CURRENT_ACTIVITY,
+        payload : activity
     }
 }
 

@@ -1,3 +1,8 @@
+/*
+  Amaç: Timer.tsx içerisinde, Kontrol butonu olarak kullanılıyor.
+  Son düzenlenme: 02/02/2021
+  Son düzenleyen: berk selvi
+*/
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { START, PAUSE, CANCEL, RESUME, DISABLE } from "../../constants/ButtonTypes";
@@ -19,6 +24,8 @@ const Circle = ({ condition, buttonPressHandler }: { condition: any, buttonPress
         decider();
     });
 
+    // Kullanıcı buttonPressHandler fonksiyonunu tetikliyor, 
+    //  o fonksiyonda tasarımsal bir işlem yapılmıyor, burada butonların tasarımı ve içeriği belirleniyor.
     const decider = () => {
         switch (condition) {
             case DISABLE:
@@ -57,40 +64,11 @@ const Circle = ({ condition, buttonPressHandler }: { condition: any, buttonPress
         }
     };
 
-    const dynamicStyle_circle = (color: any) => {
-        return {
-            alignItems: "center",
-            justifyContent: "center",
-            width: 100,
-            height: 100,
-            borderRadius: 100 / 2,
-            backgroundColor: color,
-        } as const;
-    };
-
-    const dynamicStyle_circleInside = (color: any) => {
-        return {
-            width: 90,
-            height: 90,
-            borderRadius: 90 / 2,
-            backgroundColor: color,
-        } as const;
-    };
-
-    const dynamicStyle_textCircle = (color: any) => {
-        return {
-            textAlign: "center",
-            paddingTop: 35,
-            fontSize: 18,
-            color: color,
-        } as const;
-    };
-
     return (
-        <TouchableOpacity activeOpacity={opacity} style={styles.touchableButton} onPress={() => { buttonPressHandler(condition) }}>
-            <View style={dynamicStyle_circle(circleColor)}>
-                <View style={dynamicStyle_circleInside(circleInsideColor)}>
-                    <Text style={dynamicStyle_textCircle(circleTextColor)}>{text}</Text>
+        <TouchableOpacity activeOpacity={opacity} onPress={() => { buttonPressHandler(condition) }}>
+            <View style={[styles.circle,{backgroundColor:circleColor}]} >
+                <View style={[styles.circleInside,{backgroundColor:circleInsideColor}]} >
+                    <Text style={[styles.circleText,{backgroundColor:circleTextColor}]}>{text}</Text>
                 </View>
             </View>
         </TouchableOpacity>
@@ -100,7 +78,23 @@ const Circle = ({ condition, buttonPressHandler }: { condition: any, buttonPress
 export default Circle;
 
 const styles = StyleSheet.create({
-    touchableButton: {
-
+    circle: {
+        alignItems: "center",
+        justifyContent: "center",
+        width: 100,
+        height: 100,
+        borderRadius: 50,
     },
+    circleInside: {
+        overflow:"hidden",
+        width: 90,
+        height: 90,
+        borderRadius: 90/2,
+    },
+    circleText: {
+        height:"100%",
+        textAlign: "center",
+        paddingVertical: 35,
+        fontSize: 18,
+    }
 });

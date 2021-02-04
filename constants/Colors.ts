@@ -62,14 +62,14 @@ export const lightThemeColors = {
 export const darkThemeColors = {
   PRIMARY: "#000000",
   SECONDARY: "#f0f0f0",
-  TIMER_WORK: "#595959",
+  TIMER_WORK: "#fcb13d",
 
   CARD_OUT: "#292929",
   CARD_IN: "#1c1c1e",
   CARD_TEXT: "#f7f7f7",
 
   LONG_BREAK: "#20f5b8",
-  SHORT_BREAK: "#0081EB",
+  SHORT_BREAK: "#7dabd1",
   WORK: "#000000",
 
   START_IN:"#0c3316",

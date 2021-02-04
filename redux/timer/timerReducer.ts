@@ -11,6 +11,8 @@ const initialState : timerState = {
     currentPeriod : 4,
     // Şuanki sayacın durumunu belirtmek için state.
     currentStatus : pomodoroTypes.WORK,
+    // Şanki sayacın aktiflik durumunu belirtmek için state.
+    currentActivity: false,
     // Sayacı resetlemek için bu değeri değiştiriyoruz. Bu bağımlılık için state.
     timerKey : 0,
 }
@@ -29,6 +31,12 @@ const reducer = (state = initialState, action:any) => {
             return {
                 ...state,
                 currentStatus : action.payload
+            }
+        // Şanki sayacın aktiflik durumunu belirtmek için reducer tanımlandı.
+        case timerTypes.SET_CURRENT_ACTIVITY:
+            return {
+                ...state,
+                currentActivity : action.payload
             }
         // Bağımlılık anahtarı için reducer tanımlandı.
         case timerTypes.SET_TIMER_KEY:

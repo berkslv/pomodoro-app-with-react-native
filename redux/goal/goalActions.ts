@@ -6,16 +6,16 @@
 */
 import { goalTypes } from "./goalTypes";
 
-export const setDailyGoal = (dailyGoal:number) => {
+export const setGoalDaily = (goalDaily:number) => {
     return {
         type : goalTypes.SET_DAILY_GOAL,
-        payload : dailyGoal
+        payload : goalDaily
     }
 }
 
-export const setLittleGoal = (littleGoal:number) => {
+export const setGoalLittle = (goalLittle:number) => {
     return {
         type : goalTypes.SET_LITTLE_GOAL,
-        payload : littleGoal
+        payload : goalLittle
     }
 }

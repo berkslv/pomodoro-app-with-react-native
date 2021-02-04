@@ -5,9 +5,18 @@
 - [x] Screens ile ilgilen, Settings ve Pomodoro bağlantılarını yap.
   - [x] Navigasyonda iconlar ve isimleri düzelt.
   - [x] Artık stats ekranı yok. Sadece 2 adet ekran olacak.
-- [x] Components ile ilgilen, Redux altyapısını implemente et.
+- [x] Pomodoro components ile ilgilen, Redux altyapısını implemente et.
   - [x] black-light sistem özelliğine göre karanlık ve aydınlık tema ekle.
+  - [x] Ekrandaki kartlarda sadece bugüne ait veriler listelensin.
+  - [ ] Work, shortBreak veya longBreak sürelerini atlamak için birşeyler yap. Eğer cancel denirse sayaç başa dönüyor.
+  - [ ] Renklere bir göz at.
+- [x] Setting components ile ilgilen, Redux altyapısını implemente et.
+  - [x] TS hatalarını düzenle.
+  - [x] black mode için destek ver.
+  - [x] SettingInput componentini düzenle, düzgün birşeyler yap.
 - [ ] Bildirim ver.
   - [ ] Bildirim, uygulama açıkken alınmayacak, sadece arka planda çalışırken alınacak.
 - [ ] Andorid tasarıma uyumlu, ekran genişlikleriyle uygun olacak şekilde Responsive tasarım işle.
 - [ ] Yabancı dil desteği ekle.
+- [ ] Yayınla.
+- [ ] v2 gibi reklam ekle.
