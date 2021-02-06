@@ -14,10 +14,10 @@ const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
   whitelist: [
+    'timerSettingsReducer',
     'timerReducer',
     'archiveReducer',
-    'timerSettings',
-    'userInterface',
+    'userInterfaceReducer',
     'goalReducer'
   ],
 };

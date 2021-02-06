@@ -8,10 +8,14 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { START, PAUSE, CANCEL, RESUME, DISABLE } from "../../constants/ButtonTypes";
 import useColorScheme from '../../hooks/useColorScheme';
 import { lightThemeColors, darkThemeColors } from "../../constants/Colors";
+import {
+    responsiveScreenHeight,
+    responsiveScreenWidth,
+    responsiveScreenFontSize
+} from "react-native-responsive-dimensions";
 
 
-
-const Circle = ({ condition, buttonPressHandler }: { condition: any, buttonPressHandler: any }) => {
+const TimerButton = ({ condition, buttonPressHandler }: { condition: any, buttonPressHandler: any }) => {
     const theme = useColorScheme();
     const [themeColor, setThemeColor] = useState((theme==="light")?lightThemeColors:darkThemeColors);
     const [circleColor, setCircleColor] = useState(themeColor.SECONDARY);
@@ -75,26 +79,26 @@ const Circle = ({ condition, buttonPressHandler }: { condition: any, buttonPress
     );
 };
 
-export default Circle;
+export default TimerButton;
 
 const styles = StyleSheet.create({
     circle: {
         alignItems: "center",
         justifyContent: "center",
-        width: 100,
-        height: 100,
-        borderRadius: 50,
+        width: responsiveScreenFontSize(10), // 100
+        height: responsiveScreenFontSize(10), // 100
+        borderRadius: responsiveScreenFontSize(5), // 50
     },
     circleInside: {
         overflow:"hidden",
-        width: 90,
-        height: 90,
-        borderRadius: 90/2,
+        width: responsiveScreenFontSize(12), // 90
+        height: responsiveScreenFontSize(12), // 90
+        borderRadius: responsiveScreenFontSize(6), // 45
     },
     circleText: {
         height:"100%",
         textAlign: "center",
-        paddingVertical: 35,
-        fontSize: 18,
+        paddingVertical: responsiveScreenFontSize(4), // 35
+        fontSize: responsiveScreenFontSize(2.5), // 18
     }
 });

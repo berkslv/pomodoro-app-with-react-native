@@ -5,7 +5,7 @@ export const timerSettingsTypes = {
 }
 
 export type timerSettingsState = {
-    durationWork: number,
-    durationShortBreak: number,
-    durationLongBreak: number
+    durationWork: any,
+    durationShortBreak: any,
+    durationLongBreak: any
 }

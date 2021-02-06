@@ -1,10 +1,9 @@
-import React, { Ref, useRef, useState } from "react";
+import React, { useRef } from "react";
 import {
   StyleSheet,
   Text,
   View,
   TextInput,
-  Linking,
   ScrollView,
 } from "react-native";
 import {
@@ -15,14 +14,18 @@ import {
   setGoalLittle,
   setTimerKey,
   setCurrentActivity,
-  setCurrentPeriod
+  setCurrentPeriod,
 } from "../redux";
-import { Ionicons } from '@expo/vector-icons';
 import { connect } from "react-redux";
 import { Formik } from "formik"; // DO npm uninstall formik
-import { TouchableOpacity, TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { pomodoroTypes } from "../constants/PomodoroTypes";
 import AboutUs from "./shared/AboutUs";
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize
+} from "react-native-responsive-dimensions";
 
 
 const Settings = ({
@@ -55,28 +58,60 @@ const Settings = ({
     if (ref.current) {
       ref.current.focus();
     }
-  }
+  };
 
-  const resetTimer = (e:any) => {
-    switch (currentStatus) {
-      case pomodoroTypes.WORK:
-        setCurrentPeriod(e);
-        break;
-      case pomodoroTypes.SHORT_BREAK:
-        setCurrentPeriod(e);
-        break;
-      case pomodoroTypes.LONG_BREAK:
-        setCurrentPeriod(e);
-        break;
-      default:
-        console.error("an error occur on setting switches");
-        break;
-    }
-
+  const resetTimer = () => {
     setTimerKey(timerKey);
     setCurrentActivity(false);
-  }
+  };
 
+  const workTime_changeHandler = (value: any) => {
+    resetTimer();
+
+    if (value != "") {
+      setDurationWork(parseInt(value));
+      if (currentStatus == pomodoroTypes.WORK) {
+        setCurrentPeriod(parseInt(value));
+      }
+    } else {
+      setDurationWork(value);
+      if (currentStatus == pomodoroTypes.WORK) {
+        setCurrentPeriod(value);
+      }
+    }
+  };
+
+  const shortBreak_changeHandler = (value: any) => {
+    resetTimer();
+
+    if (value != "") {
+      setDurationShortBreak(parseInt(value));
+      if (currentStatus == pomodoroTypes.SHORT_BREAK) {
+        setCurrentPeriod(parseInt(value));
+      }
+    } else {
+      setDurationShortBreak(value);
+      if (currentStatus == pomodoroTypes.SHORT_BREAK) {
+        setCurrentPeriod(value);
+      }
+    }
+  };
+
+  const longBreak_changeHandler = (value: any) => {
+    resetTimer();
+
+    if (value != "") {
+      setDurationLongBreak(parseInt(value));
+      if (currentStatus == pomodoroTypes.LONG_BREAK) {
+        setCurrentPeriod(parseInt(value));
+      }
+    } else {
+      setDurationLongBreak(value);
+      if (currentStatus == pomodoroTypes.LONG_BREAK) {
+        setCurrentPeriod(value);
+      }
+    }
+  };
 
   return (
     <ScrollView
@@ -84,37 +119,58 @@ const Settings = ({
       keyboardShouldPersistTaps="handled"
     >
       <View style={styles.inputParentContainer}>
-        <TouchableWithoutFeedback onPress={() => { focusEvent(workTimeRef) }} style={styles.inputContainer}>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            focusEvent(workTimeRef);
+          }}
+          style={styles.inputContainer}
+        >
           <Text style={styles.inputText}>Work time</Text>
           <TextInput
             ref={workTimeRef}
             style={styles.input}
             placeholder="Work time"
             value={durationWork.toString()}
-            onChangeText={(e) => { setDurationWork(e); resetTimer(e);}}
+            onChangeText={(e) => {
+              workTime_changeHandler(e);
+            }}
             keyboardType="number-pad"
             selectTextOnFocus
           />
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => { focusEvent(shortBreakRef) }} style={styles.inputContainer}>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            focusEvent(shortBreakRef);
+          }}
+          style={styles.inputContainer}
+        >
           <Text style={styles.inputText}>Short break</Text>
           <TextInput
             ref={shortBreakRef}
             style={styles.input}
-            placeholder="Work time"
-            onChangeText={(e) => { setDurationShortBreak(e); resetTimer(e);}}
+            placeholder="Short break"
+            onChangeText={(e) => {
+              shortBreak_changeHandler(e);
+            }}
             value={durationShortBreak.toString()}
             keyboardType="number-pad"
             selectTextOnFocus
           />
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => { focusEvent(longBreakRef) }} style={styles.inputLastContainer}>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            focusEvent(longBreakRef);
+          }}
+          style={styles.inputLastContainer}
+        >
           <Text style={styles.inputText}>Long break</Text>
           <TextInput
             ref={longBreakRef}
             style={styles.input}
-            placeholder="Work time"
-            onChangeText={(e) => { setDurationLongBreak(e); resetTimer(e);}}
+            placeholder="Long break"
+            onChangeText={(e) => {
+              longBreak_changeHandler(e);
+            }}
             value={durationLongBreak.toString()}
             keyboardType="number-pad"
             selectTextOnFocus
@@ -123,25 +179,39 @@ const Settings = ({
       </View>
 
       <View style={styles.inputParentContainer}>
-        <TouchableWithoutFeedback onPress={() => { focusEvent(workTimeRef) }} style={styles.inputContainer}>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            focusEvent(workTimeRef);
+          }}
+          style={styles.inputContainer}
+        >
           <Text style={styles.inputText}>Little goal</Text>
           <TextInput
             ref={goalLittleRef}
             style={styles.input}
             placeholder="Little goal"
             value={goalLittle.toString()}
-            onChangeText={(e) => { setGoalLittle(e)}}
+            onChangeText={(e) => {
+              setGoalLittle(e);
+            }}
             keyboardType="number-pad"
             selectTextOnFocus
           />
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => { focusEvent(shortBreakRef) }} style={styles.inputLastContainer}>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            focusEvent(shortBreakRef);
+          }}
+          style={styles.inputLastContainer}
+        >
           <Text style={styles.inputText}>Daily goal</Text>
           <TextInput
             ref={goalDailyRef}
             style={styles.input}
             placeholder="Daily goal"
-            onChangeText={(e) => { setGoalDaily(e)}}
+            onChangeText={(e) => {
+              setGoalDaily(e);
+            }}
             value={goalDaily.toString()}
             keyboardType="number-pad"
             selectTextOnFocus
@@ -150,7 +220,6 @@ const Settings = ({
       </View>
 
       <AboutUs />
-      
     </ScrollView>
   );
 };
@@ -185,7 +254,8 @@ const mapDispatchToProps = (dispatch: any) => {
 
     setTimerKey: (currentKey: any) => dispatch(setTimerKey(currentKey)),
     setCurrentPeriod: (period: any) => dispatch(setCurrentPeriod(period)),
-    setCurrentActivity: (activity: boolean) => dispatch(setCurrentActivity(activity)),
+    setCurrentActivity: (activity: boolean) =>
+      dispatch(setCurrentActivity(activity)),
   };
 };
 
@@ -195,10 +265,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(Settings);
 const styles = StyleSheet.create({
   inputParentContainer: {
     backgroundColor: "#141414",
-    paddingVertical: 5,
-    paddingHorizontal: 20,
+    paddingVertical: responsiveScreenHeight(0.8), // 5
+    paddingHorizontal: responsiveScreenWidth(5), // 20
     flexDirection: "column",
-    marginTop: 30,
+    marginTop: responsiveScreenHeight(4), // 30
   },
   inputContainer: {
     flex: 1,
@@ -215,14 +285,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   input: {
-    padding: 10,
-    fontSize: 20,
+    paddingVertical: responsiveScreenHeight(1.2), // 10
+    paddingHorizontal: responsiveScreenWidth(2.5), // 10
+    fontSize: responsiveScreenFontSize(2.5), // 20
     color: "#ededed",
-    textAlign: "center",
+    textAlign:"right",
   },
   inputText: {
     flex: 1,
     color: "#ffffff",
-    fontSize: 18,
+    fontSize: responsiveScreenFontSize(2.33), // 18
   },
 });

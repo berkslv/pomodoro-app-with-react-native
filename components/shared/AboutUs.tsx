@@ -1,19 +1,25 @@
 import { Ionicons } from '@expo/vector-icons'
 import React from 'react'
 import { Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize
+} from "react-native-responsive-dimensions";
+
 
 const AboutUs = () => {
     return (
-        <View style={styles.aboutUsParentContainer}>
-            <Text style={styles.aboutUsTextTitle}>
+        <View style={styles.parentContainer}>
+            <Text style={styles.textTitle}>
             About Us
             </Text>
             
-            <Text style={styles.aboutUsTextBody}>
+            <Text style={styles.textBody}>
             This project is open source. If you wish, you can review us and contribute. 
             </Text>
             
-            <View style={styles.aboutUsIconContainer}>
+            <View style={styles.iconContainer}>
                 <TouchableOpacity onPress={()=>{Linking.openURL("https://github.com/berkslv/pomodoro-app-with-react-native")}}>
                     <Ionicons name="logo-github" size={36} color="white" />
                 </TouchableOpacity>
@@ -22,7 +28,7 @@ const AboutUs = () => {
                 </TouchableOpacity>
             </View>
             
-            <Text style={styles.aboutUsTextFooter}>
+            <Text style={styles.textFooter}>
             As we are open source, we put revenue on the 2nd plan, but we have ads for app survival. However, we are trying to present this in the most comfortable way.        
             </Text>
       </View>
@@ -32,39 +38,37 @@ const AboutUs = () => {
 export default AboutUs
 
 const styles = StyleSheet.create({
-  aboutUsParentContainer: {
+  parentContainer: {
     backgroundColor: "#141414",
-    paddingVertical: 5,
-    paddingHorizontal: 20,
+    paddingVertical: responsiveScreenHeight(0.8), // 5
+    paddingHorizontal: responsiveScreenWidth(5), // 20
     flexDirection: "column",
-    marginTop: 30,
+    marginTop: responsiveScreenHeight(4), // 30
   },
-  aboutUsIconContainer:{
+  iconContainer:{
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",
   },
-  aboutUsTextTitle: {
+  textTitle: {
     flex: 1,
     color: "#ffffff",
-    fontSize: 20,
+    fontSize: responsiveScreenFontSize(2.7), // 20
     textAlign:"center",
-    borderBottomWidth: 1,
-    borderBottomColor: "#363636",
-    paddingVertical: 10,
+    paddingVertical: responsiveScreenHeight(1.5), // 10
   },
-  aboutUsTextBody:{
+  textBody:{
     flex: 1,
     color: "#d4d4d4",
-    fontSize: 16,
+    fontSize: responsiveScreenFontSize(2.1), // 16
     textAlign:"center",
-    marginBottom:15,
+    marginBottom: responsiveScreenHeight(2), // 15
   },
-  aboutUsTextFooter: {
+  textFooter: {
     flex: 1,
     color: "#999999",
-    fontSize: 14,
-    paddingTop: 15,
+    fontSize: responsiveScreenFontSize(1.85), // 14
+    paddingTop: responsiveScreenHeight(2), // 15
   },
 })

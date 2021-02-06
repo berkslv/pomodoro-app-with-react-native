@@ -4,8 +4,8 @@
   Son düzenlenme: 02/02/2021
   Son düzenleyen: berk selvi
 */
-import React, { useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import React, { useState, useRef, useEffect } from "react";
+import { StyleSheet, Text, View, TouchableOpacity, Platform } from "react-native";
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 import { connect } from "react-redux";
 import {
@@ -19,12 +19,17 @@ import {
   setTimerKey,
   setCurrentActivity
 } from "../redux";
-import Circle from "./shared/Circle";
+import TimerButton from "./shared/TimerButton";
 import useColorScheme from '../hooks/useColorScheme';
 import { START, PAUSE, CANCEL, RESUME, DISABLE } from "../constants/ButtonTypes";
 import { pomodoroTypes } from "../constants/PomodoroTypes";
 import { lightThemeColors, darkThemeColors } from "../constants/Colors";
-
+import useNotification from "../hooks/useNotification";
+import {
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveScreenFontSize
+} from "react-native-responsive-dimensions";
 
 const Counter = ({
   // functions
@@ -45,17 +50,19 @@ const Counter = ({
   formatTime,
   formatTarget,
   currentPeriod,
+  currentStatus,
   currentActivity,
   timerKey,
   goalDaily,
   goalLittle,
 }: any ) => {
   const theme = useColorScheme();
+  const sendNotification = useNotification({ delayTime:parseInt(currentPeriod) ,notificationType:currentStatus });
   const [themeColor, setThemeColor] = useState((theme === "light") ? lightThemeColors : darkThemeColors);
   const [buttonCondition_Right, setButtonCondition_Right] = useState(START);
   const [buttonCondition_Left, setButtonCondition_Left] = useState(DISABLE);
   const [counterColor, setCounterColor] = useState(themeColor.TIMER_WORK);
-
+  
   // Sayacın kontrol düğmelerinden parametre alarak işlemlere karar veriliyor. const olarak ifade geri dönüyor. 
   // Örnek olarak eğer switch CANCEL girerse CANCEL düğmesine basılmıştır.
   const buttonPressHandler = (currentCondition: string) => {
@@ -67,6 +74,8 @@ const Counter = ({
         setButtonCondition_Left(DISABLE);
         break;
       case START:
+        sendNotification();
+
         setCurrentActivity(true);
         setButtonCondition_Right(PAUSE);
         setButtonCondition_Left(CANCEL);
@@ -214,7 +223,7 @@ const Counter = ({
         <CountdownCircleTimer
           isPlaying={currentActivity}
           duration={currentPeriod}
-          size={270}
+          size={responsiveScreenWidth(75)} // 270
           key={timerKey}
           colors={counterColor}
           onComplete={() => {
@@ -232,8 +241,8 @@ const Counter = ({
         </CountdownCircleTimer>
 
         <View style={styles.controllers}>
-          <Circle condition={buttonCondition_Left} buttonPressHandler={buttonPressHandler} />
-          <Circle condition={buttonCondition_Right} buttonPressHandler={buttonPressHandler} />
+          <TimerButton condition={buttonCondition_Left} buttonPressHandler={buttonPressHandler} />
+          <TimerButton condition={buttonCondition_Right} buttonPressHandler={buttonPressHandler} />
         </View>
 
         <View style={styles.cardContainer}>
@@ -276,6 +285,7 @@ const mapStateToProps = (state: any) => {
     formatTarget: state.userInterface.formatTarget,
 
     currentPeriod: state.timer.currentPeriod,
+    currentStatus: state.timer.currentStatus,
     currentActivity: state.timer.currentActivity,
     timerKey: state.timer.timerKey,
 
@@ -304,6 +314,7 @@ const mapDispatchToProps = (dispatch: any) => {
 // redux bağlantısı kuruyoruz.
 export default connect(mapStateToProps, mapDispatchToProps)(Counter);
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -312,7 +323,7 @@ const styles = StyleSheet.create({
   },
   countdownContainer: {
     position: "absolute",
-    top: 30,
+    top: responsiveScreenHeight(2), // 10
   },
   countdownTextContainer: {
     flex: 1,
@@ -320,7 +331,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   countdownText: {
-    fontSize: 45,
+    fontSize: responsiveScreenFontSize(6), // 45
   },
   controllers: {
     flex: 1,
@@ -331,19 +342,20 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 30,
+    marginTop: responsiveScreenHeight(4) // 30
   },
   card: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    borderWidth: 2,
-    borderRadius: 20,
+    borderWidth: responsiveScreenWidth(0.5), // 2
+    borderRadius: responsiveScreenWidth(5), // 20
     width: "100%",
-    padding: 15,
-    marginVertical: 10,
+    paddingVertical: responsiveScreenHeight(1.8), // 15
+    paddingHorizontal: responsiveScreenWidth(1.8), // 15
+    marginVertical: responsiveScreenHeight(1.2), // 10
   },
   cardText: {
-    fontSize: 20,
+    fontSize: responsiveScreenFontSize(2.6), // 20
   },
 });

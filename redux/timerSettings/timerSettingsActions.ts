@@ -6,7 +6,7 @@
 import { timerSettingsTypes } from "./timerSettingsTypes";
 
 // Çalışma süresi için Action tanımlandı. 
-export const setDurationWork = ( durationWork:number ) => {
+export const setDurationWork = ( durationWork:any ) => {
     return {
         type : timerSettingsTypes.SET_WORK_TIME,
         payload : durationWork
@@ -14,7 +14,7 @@ export const setDurationWork = ( durationWork:number ) => {
 }
 
 // Kısa mola süresi için Action tanımlandı. 
-export const setDurationShortBreak = ( durationShortBreak:number ) => {
+export const setDurationShortBreak = ( durationShortBreak:any ) => {
     return {
         type : timerSettingsTypes.SET_SHORT_BREAK_TIME,
         payload : durationShortBreak
@@ -22,7 +22,7 @@ export const setDurationShortBreak = ( durationShortBreak:number ) => {
 }
 
 // Uzun mola süresi için Action tanımlandı. 
-export const setDurationLongBreak = ( durationLongBreak:number ) => {
+export const setDurationLongBreak = ( durationLongBreak:any ) => {
     return {
         type : timerSettingsTypes.SET_LONG_BREAK_TIME,
         payload : durationLongBreak
