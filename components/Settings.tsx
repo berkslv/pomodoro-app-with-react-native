@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -26,7 +26,9 @@ import {
   responsiveScreenWidth,
   responsiveScreenFontSize
 } from "react-native-responsive-dimensions";
-
+import I18n from "../localization/_i18n";
+import useColorScheme from '../hooks/useColorScheme';
+import { lightThemeColors, darkThemeColors } from "../constants/Colors";
 
 const Settings = ({
   // states
@@ -47,12 +49,21 @@ const Settings = ({
   setCurrentPeriod,
   setCurrentActivity,
 }: any) => {
+  const theme = useColorScheme();
+  const [themeColor, setThemeColor] = useState((theme === "light") ? lightThemeColors : darkThemeColors);
+
   const workTimeRef: any = useRef(null);
   const shortBreakRef: any = useRef(null);
   const longBreakRef: any = useRef(null);
 
   const goalLittleRef: any = useRef(null);
   const goalDailyRef: any = useRef(null);
+
+  /* 
+  useEffect(() => {
+    console.error(I18n.t("hello"));
+  }, []) 
+  */
 
   const focusEvent = (ref: any) => {
     if (ref.current) {
@@ -118,18 +129,18 @@ const Settings = ({
       contentContainerStyle={{ flexGrow: 1 }}
       keyboardShouldPersistTaps="handled"
     >
-      <View style={styles.inputParentContainer}>
+      <View style={[styles.inputParentContainer,{backgroundColor:themeColor.SETTINGS_BACKGROUND}]}> 
         <TouchableWithoutFeedback
           onPress={() => {
             focusEvent(workTimeRef);
           }}
-          style={styles.inputContainer}
+          style={[styles.inputContainer,{borderBottomColor:themeColor.SETTINGS_BORDER}]}
         >
-          <Text style={styles.inputText}>Work time</Text>
+          <Text style={[styles.inputText,{color: themeColor.SETTINGS_INPUT_TEXT}]}>{I18n.t("work_time")}</Text>
           <TextInput
             ref={workTimeRef}
-            style={styles.input}
-            placeholder="Work time"
+            style={[styles.input,{color: themeColor.SETTINGS_INPUT}]}
+            placeholder={I18n.t("work_time")}
             value={durationWork.toString()}
             onChangeText={(e) => {
               workTime_changeHandler(e);
@@ -142,13 +153,13 @@ const Settings = ({
           onPress={() => {
             focusEvent(shortBreakRef);
           }}
-          style={styles.inputContainer}
+          style={[styles.inputContainer,{borderBottomColor:themeColor.SETTINGS_BORDER}]}
         >
-          <Text style={styles.inputText}>Short break</Text>
+          <Text style={[styles.inputText,{color: themeColor.SETTINGS_INPUT_TEXT}]}>{I18n.t("short_break")}</Text>
           <TextInput
             ref={shortBreakRef}
-            style={styles.input}
-            placeholder="Short break"
+            style={[styles.input,{color: themeColor.SETTINGS_INPUT}]}
+            placeholder={I18n.t("short_break")}
             onChangeText={(e) => {
               shortBreak_changeHandler(e);
             }}
@@ -163,11 +174,11 @@ const Settings = ({
           }}
           style={styles.inputLastContainer}
         >
-          <Text style={styles.inputText}>Long break</Text>
+          <Text style={[styles.inputText,{color: themeColor.SETTINGS_INPUT_TEXT}]}>{I18n.t("long_break")}</Text>
           <TextInput
             ref={longBreakRef}
-            style={styles.input}
-            placeholder="Long break"
+            style={[styles.input,{color: themeColor.SETTINGS_INPUT}]}
+            placeholder={I18n.t("long_break")}
             onChangeText={(e) => {
               longBreak_changeHandler(e);
             }}
@@ -178,18 +189,18 @@ const Settings = ({
         </TouchableWithoutFeedback>
       </View>
 
-      <View style={styles.inputParentContainer}>
+      <View style={[styles.inputParentContainer,{backgroundColor:themeColor.SETTINGS_BACKGROUND}]}>
         <TouchableWithoutFeedback
           onPress={() => {
             focusEvent(workTimeRef);
           }}
-          style={styles.inputContainer}
+          style={[styles.inputContainer,{borderBottomColor:themeColor.SETTINGS_BORDER}]}
         >
-          <Text style={styles.inputText}>Little goal</Text>
+          <Text style={[styles.inputText,{color: themeColor.SETTINGS_INPUT_TEXT}]}>{I18n.t("little_goal")}</Text>
           <TextInput
             ref={goalLittleRef}
-            style={styles.input}
-            placeholder="Little goal"
+            style={[styles.input,{color: themeColor.SETTINGS_INPUT}]}
+            placeholder={I18n.t("little_goal")}
             value={goalLittle.toString()}
             onChangeText={(e) => {
               setGoalLittle(e);
@@ -204,11 +215,11 @@ const Settings = ({
           }}
           style={styles.inputLastContainer}
         >
-          <Text style={styles.inputText}>Daily goal</Text>
+          <Text style={[styles.inputText,{color: themeColor.SETTINGS_INPUT_TEXT}]}>{I18n.t("daily_gaol")}</Text>
           <TextInput
             ref={goalDailyRef}
-            style={styles.input}
-            placeholder="Daily goal"
+            style={[styles.input,{color: themeColor.SETTINGS_INPUT}]}
+            placeholder={I18n.t("daily_gaol")}
             onChangeText={(e) => {
               setGoalDaily(e);
             }}
@@ -264,7 +275,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(Settings);
 
 const styles = StyleSheet.create({
   inputParentContainer: {
-    backgroundColor: "#141414",
     paddingVertical: responsiveScreenHeight(0.8), // 5
     paddingHorizontal: responsiveScreenWidth(5), // 20
     flexDirection: "column",
@@ -276,7 +286,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     borderBottomWidth: 1,
-    borderBottomColor: "#363636",
   },
   inputLastContainer: {
     flex: 1,
@@ -288,12 +297,10 @@ const styles = StyleSheet.create({
     paddingVertical: responsiveScreenHeight(1.2), // 10
     paddingHorizontal: responsiveScreenWidth(2.5), // 10
     fontSize: responsiveScreenFontSize(2.5), // 20
-    color: "#ededed",
     textAlign:"right",
   },
   inputText: {
     flex: 1,
-    color: "#ffffff",
     fontSize: responsiveScreenFontSize(2.33), // 18
   },
 });

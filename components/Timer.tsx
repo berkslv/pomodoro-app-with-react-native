@@ -30,6 +30,7 @@ import {
   responsiveScreenWidth,
   responsiveScreenFontSize
 } from "react-native-responsive-dimensions";
+import I18n from "../localization/_i18n";
 
 const Counter = ({
   // functions
@@ -188,12 +189,16 @@ const Counter = ({
     // formatTime değişkeni userInterface reducer içerisinden geliyor. Kartın üzerine tıklanarak güncelleniyor.
     if (formatTime == 0) {
       if (hour == "0") {
-        return minute + " minutes";
+        if (minute == "0") {
+          return I18n.t("work_please");  
+        }
+
+        return minute + " " + I18n.t("minutes");
       } else {
-        return hour + " hours " + minute + " minutes";
+        return hour + " " + I18n.t("hours") + " " + minute + " " + I18n.t("minutes");
       }
     } else {
-      return Math.floor(totalMinute) + " minutes";
+      return Math.floor(totalMinute) + " " + I18n.t("minutes");
     }
   };
 
@@ -348,6 +353,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    textAlign: "center",
     borderWidth: responsiveScreenWidth(0.5), // 2
     borderRadius: responsiveScreenWidth(5), // 20
     width: "100%",
@@ -356,6 +362,6 @@ const styles = StyleSheet.create({
     marginVertical: responsiveScreenHeight(1.2), // 10
   },
   cardText: {
-    fontSize: responsiveScreenFontSize(2.6), // 20
+    fontSize: responsiveScreenFontSize(2.4), // 20
   },
 });

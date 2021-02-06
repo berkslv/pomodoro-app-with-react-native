@@ -9,10 +9,9 @@ import { START, PAUSE, CANCEL, RESUME, DISABLE } from "../../constants/ButtonTyp
 import useColorScheme from '../../hooks/useColorScheme';
 import { lightThemeColors, darkThemeColors } from "../../constants/Colors";
 import {
-    responsiveScreenHeight,
-    responsiveScreenWidth,
     responsiveScreenFontSize
 } from "react-native-responsive-dimensions";
+import I18n from "../../localization/_i18n";
 
 
 const TimerButton = ({ condition, buttonPressHandler }: { condition: any, buttonPressHandler: any }) => {
@@ -34,34 +33,34 @@ const TimerButton = ({ condition, buttonPressHandler }: { condition: any, button
         switch (condition) {
             case DISABLE:
                 setOpacity(1);
-                setText("Cancel");
+                setText(I18n.t("cancel"));
                 setCircleColor(themeColor.DISABLE_OUT);
                 setCircleInsideColor(themeColor.DISABLE_IN);
                 setCircleTextColor(themeColor.DISABLE_TEXT);
                 break;
             case CANCEL:
-                setText("Cancel");
+                setText(I18n.t("cancel"));
                 setCircleColor(themeColor.CANCEL_OUT);
                 setCircleInsideColor(themeColor.CANCEL_IN);
                 setCircleTextColor(themeColor.CANCEL_TEXT);
                 break;
             case START:
-                setText("Start");
+                setText(I18n.t("start"));
                 setCircleColor(themeColor.START_OUT);
                 setCircleInsideColor(themeColor.START_IN);
                 setCircleTextColor(themeColor.START_TEXT);
                 break;
             case RESUME:
-                setText("Resume");
+                setText(I18n.t("resume"));
                 setCircleColor(themeColor.RESUME_OUT);
                 setCircleInsideColor(themeColor.RESUME_IN);
                 setCircleTextColor(themeColor.RESUME_TEXT);
                 break;
             case PAUSE:
-                setText("Pause");
+                setText(I18n.t("pause"));
                 setCircleColor(themeColor.PAUSE_OUT);
                 setCircleInsideColor(themeColor.PAUSE_IN);
-                setCircleTextColor(themeColor.PAUESE_TEXT);
+                setCircleTextColor(themeColor.PAUESE_TEXT); 
                 break;
             default:
                 break;
@@ -72,7 +71,7 @@ const TimerButton = ({ condition, buttonPressHandler }: { condition: any, button
         <TouchableOpacity activeOpacity={opacity} onPress={() => { buttonPressHandler(condition) }}>
             <View style={[styles.circle,{backgroundColor:circleColor}]} >
                 <View style={[styles.circleInside,{backgroundColor:circleInsideColor}]} >
-                    <Text style={[styles.circleText,{backgroundColor:circleTextColor}]}>{text}</Text>
+                    <Text style={[styles.circleText,{color:circleTextColor}]}>{text}</Text>
                 </View>
             </View>
         </TouchableOpacity>
@@ -98,7 +97,7 @@ const styles = StyleSheet.create({
     circleText: {
         height:"100%",
         textAlign: "center",
-        paddingVertical: responsiveScreenFontSize(4), // 35
-        fontSize: responsiveScreenFontSize(2.5), // 18
+        paddingVertical: responsiveScreenFontSize(4.5), // 35
+        fontSize: responsiveScreenFontSize(2.2), // 18
     }
 });

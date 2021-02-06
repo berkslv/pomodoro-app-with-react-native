@@ -7,13 +7,14 @@
 */
 import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, HeaderTitle } from '@react-navigation/stack';
 import * as React from 'react';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import PomodoroScreen from '../screens/PomodoroScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import I18n from "../localization/_i18n";
 import { BottomTabParamList, PomodoroParamList, SettingsParamList } from '../types';
 
 // Bottom navigasyondaki icon için gerekli işlemler
@@ -68,7 +69,7 @@ function PomodoroNavigator() {
       <PomodoroStack.Screen
         name="PomodoroScreen"
         component={PomodoroScreen}
-        options={{ headerTitle: 'Pomodoro' }}
+        options={{ headerTitle: 'Pomodoro', headerTitleAlign: "center" }}
       />
     </PomodoroStack.Navigator>
   );
@@ -83,7 +84,7 @@ function SettingsNavigator() {
       <SettingsStack.Screen
         name="SettingsScreen"
         component={SettingsScreen}
-        options={{ headerTitle: 'Settings' }}
+        options={{ headerTitle: 'Settings', headerTitleAlign: "center" }}
       />
     </SettingsStack.Navigator>
   );

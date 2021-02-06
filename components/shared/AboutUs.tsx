@@ -1,35 +1,42 @@
 import { Ionicons } from '@expo/vector-icons'
-import React from 'react'
+import React, { useState } from 'react'
 import { Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import {
   responsiveScreenHeight,
   responsiveScreenWidth,
   responsiveScreenFontSize
 } from "react-native-responsive-dimensions";
+import useColorScheme from '../../hooks/useColorScheme';
+import { lightThemeColors, darkThemeColors } from "../../constants/Colors";
+import I18n from "../../localization/_i18n";
 
 
 const AboutUs = () => {
+    const theme = useColorScheme();
+    const [themeColor, setThemeColor] = useState((theme === "light") ? lightThemeColors : darkThemeColors);
+    const [iconColor, setIconColor] = useState((theme === "light") ? "black" : "white" );
+
     return (
-        <View style={styles.parentContainer}>
-            <Text style={styles.textTitle}>
-            About Us
+        <View style={[styles.parentContainer,{backgroundColor:themeColor.SETTINGS_BACKGROUND}]}>
+            <Text style={[styles.textTitle,{color:themeColor.ABOUT_US_TITLE}]}>
+              {I18n.t("about_us")}
             </Text>
             
-            <Text style={styles.textBody}>
-            This project is open source. If you wish, you can review us and contribute. 
+            <Text style={[styles.textBody,{color:themeColor.ABOUT_US_BODY}]}>
+              {I18n.t("about_us_title")}
             </Text>
             
             <View style={styles.iconContainer}>
                 <TouchableOpacity onPress={()=>{Linking.openURL("https://github.com/berkslv/pomodoro-app-with-react-native")}}>
-                    <Ionicons name="logo-github" size={36} color="white" />
+                    <Ionicons name="logo-github" size={36} color={iconColor} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={()=>{Linking.openURL("mailto:berkslv@gmail.com")}}>
-                    <Ionicons name="mail" size={36} color="white" />
+                    <Ionicons name="mail" size={36} color={iconColor} />
                 </TouchableOpacity>
             </View>
             
-            <Text style={styles.textFooter}>
-            As we are open source, we put revenue on the 2nd plan, but we have ads for app survival. However, we are trying to present this in the most comfortable way.        
+            <Text style={[styles.textFooter,{color:themeColor.ABOUT_US_FOOTER}]}>
+              {I18n.t("about_us_body")}            
             </Text>
       </View>
     )
@@ -39,7 +46,6 @@ export default AboutUs
 
 const styles = StyleSheet.create({
   parentContainer: {
-    backgroundColor: "#141414",
     paddingVertical: responsiveScreenHeight(0.8), // 5
     paddingHorizontal: responsiveScreenWidth(5), // 20
     flexDirection: "column",
@@ -53,21 +59,18 @@ const styles = StyleSheet.create({
   },
   textTitle: {
     flex: 1,
-    color: "#ffffff",
     fontSize: responsiveScreenFontSize(2.7), // 20
     textAlign:"center",
     paddingVertical: responsiveScreenHeight(1.5), // 10
   },
   textBody:{
     flex: 1,
-    color: "#d4d4d4",
     fontSize: responsiveScreenFontSize(2.1), // 16
     textAlign:"center",
     marginBottom: responsiveScreenHeight(2), // 15
   },
   textFooter: {
     flex: 1,
-    color: "#999999",
     fontSize: responsiveScreenFontSize(1.85), // 14
     paddingTop: responsiveScreenHeight(2), // 15
   },

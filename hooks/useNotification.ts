@@ -3,6 +3,8 @@ import { Platform } from 'react-native'
 import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
 import { pomodoroTypes } from "../constants/PomodoroTypes";
+import I18n from "../localization/_i18n";
+
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -40,16 +42,16 @@ const useNotification = ({delayTime,notificationType}:any) => {
 
         switch (notificationType) {
             case pomodoroTypes.WORK:
-                title = "work";
-                body = "work body";
+                title = I18n.t("notify_work_title");
+                body = I18n.t("notify_work_body");
                 break;
             case pomodoroTypes.SHORT_BREAK:
-                title = "short break";
-                body = "short break body";
+                title = I18n.t("notify_short_title");
+                body = I18n.t("notify_short_body");
                 break;
             case pomodoroTypes.LONG_BREAK:
-                title = "long break";
-                body = "long break body";
+                title = I18n.t("notify_long_title");
+                body = I18n.t("notify_long_body");
                 break;
             default:
                 break;

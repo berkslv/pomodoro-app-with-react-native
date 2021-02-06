@@ -36,17 +36,17 @@ export const lightThemeColors = {
   SHORT_BREAK: "#0e5cc1",
   WORK: "#000000",
 
-  START_IN:"#dfffcc",
-  START_OUT:"#a3e8b0",
-  START_TEXT:"#59ba82",
+  START_IN:"#a3e69a",
+  START_OUT:"#a3e69a",
+  START_TEXT:"#2ba819",
 
-  PAUSE_IN: "#fffae3",
-  PAUSE_OUT: "#ffe566",
-  PAUESE_TEXT: "#de8e2c",
+  PAUSE_IN: "#ffe175",
+  PAUSE_OUT: "#ffe175",
+  PAUESE_TEXT: "#c2791f",
 
-  RESUME_IN: "#dfffcc",
-  RESUME_OUT: "#a3e8b0",
-  RESUME_TEXT: "#59ba82",
+  RESUME_IN: "#a3e69a",
+  RESUME_OUT: "#a3e69a",
+  RESUME_TEXT: "#2ba819",
 
   CANCEL_IN : "#ebebeb",
   CANCEL_OUT: "#545454",
@@ -55,6 +55,15 @@ export const lightThemeColors = {
   DISABLE_IN: "#d9d9d9",
   DISABLE_OUT:"#e8e8e8",
   DISABLE_TEXT:"#a1a1a1",
+
+  SETTINGS_BACKGROUND:"#f7f7f7",
+  SETTINGS_BORDER:"#ebebeb",
+  SETTINGS_INPUT:"#000000",
+  SETTINGS_INPUT_TEXT:"#000000",
+
+  ABOUT_US_TITLE:"#000000",
+  ABOUT_US_BODY:"#000000",
+  ABOUT_US_FOOTER:"#707070",
 
   ERROR:"#ff2200",
 }
@@ -91,6 +100,15 @@ export const darkThemeColors = {
   DISABLE_IN: "#1c1c1e",
   DISABLE_OUT:"#1c1c1e",
   DISABLE_TEXT:"#5a5a5e",
+
+  SETTINGS_BACKGROUND:"#141414",
+  SETTINGS_BORDER:"#363636",
+  SETTINGS_INPUT:"#ededed",
+  SETTINGS_INPUT_TEXT:"#ffffff",
+
+  ABOUT_US_TITLE:"#ffffff",
+  ABOUT_US_BODY:"#d4d4d4",
+  ABOUT_US_FOOTER:"#999999",
 
   ERROR:"#ff2200",
 }
