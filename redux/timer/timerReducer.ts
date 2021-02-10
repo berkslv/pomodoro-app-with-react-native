@@ -1,53 +1,49 @@
-/*
-  Amaç: Şuanki sayaç durumunu & süresini & değişim anahtarını belirlemek için reducer oluşturuldu.
-  Son düzenlenme: 30/01/2021
-  Son düzenleyen: berk selvi
-*/
+/**
+ * @file Reducer was created for the basic features that the timer needs to run.
+ * @author Berk selvi
+ * @license Apache-2.0
+ */
 import { timerTypes, timerState } from "./timerTypes";
 import { pomodoroTypes } from "../../constants/PomodoroTypes";
 
+// Check out special type for detailed information. 
 const initialState : timerState = {
-    // Şuanki sayacın kaç saniye olduğunu belirtmek için state.
-    currentPeriod : 4,
-    // Şuanki sayacın durumunu belirtmek için state.
+    currentPeriod : 1500,
     currentStatus : pomodoroTypes.WORK,
-    // Şanki sayacın aktiflik durumunu belirtmek için state.
     currentActivity: false,
-    // Sayacı resetlemek için bu değeri değiştiriyoruz. Bu bağımlılık için state.
     timerKey : 0,
 }
 
 
 const reducer = (state = initialState, action:any) => {
     switch (action.type) {
-        // Şuanki sayacın kaç saniye olduğunu belirtmek için reducer tanımlandı.
+        // reducer case for currentPeriod. 
         case timerTypes.SET_CURRENT_PERIOD:
             return {
                 ...state,
                 currentPeriod : action.payload
             }
-        // Şuanki sayacın durumunu belirtmek için reducer tanımlandı.
+        // reducer case for currentStatus. 
         case timerTypes.SET_CURRENT_STATUS:
             return {
                 ...state,
                 currentStatus : action.payload
             }
-        // Şanki sayacın aktiflik durumunu belirtmek için reducer tanımlandı.
+        // reducer case for currentActivity. 
         case timerTypes.SET_CURRENT_ACTIVITY:
             return {
                 ...state,
                 currentActivity : action.payload
             }
-        // Bağımlılık anahtarı için reducer tanımlandı.
+        // reducer case for timerKey. 
         case timerTypes.SET_TIMER_KEY:
             return {
                 ...state,
                 timerKey : action.payload
             }
-        // Default durum tanımlandı.
+        // default statement was created. 
         default: return state
     }
 }
 
-// Export edildi.
 export default reducer

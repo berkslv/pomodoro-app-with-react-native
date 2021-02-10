@@ -1,11 +1,16 @@
-// Rusça - rusya
+/**
+ * @file Language settings for Russian - Russia
+ * @author Berk selvi
+ * @license Apache-2.0
+ */
+
 
 const ru = {
     // navigation
     pomodoro:"Помидор",
     settings:"Настройки",
     // cards
-    work_please:"Давай учиться", // "Let's study" because normally is too long
+    work_please:"Давай учиться",
     minutes:"минут",
     hours:"часы",
     // button
@@ -21,7 +26,7 @@ const ru = {
     daily_gaol:"Ежедневная цель",
     // about us
     about_us:"О нас",
-    about_us_title:"Этот проект с открытым исходным кодом. Если хотите, вы можете просмотреть нас и внести свой вклад.",
+    about_us_title:"Этот проект с открытым исходным кодом. Если хотите, можете просмотреть наш исходный код или внести свой вклад.",
     about_us_body:"Поскольку у нас открытый исходный код, мы вкладываем доход во второй план, но у нас есть реклама для выживания приложений. Однако мы стараемся представить это максимально комфортно.",
     // notification badge
     notify_work_title:"Работа завершена",

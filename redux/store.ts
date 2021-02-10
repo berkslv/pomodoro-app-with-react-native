@@ -1,15 +1,17 @@
-/*
-  Amaç: redux için store oluşturma. & kalıcı state oluşturma. & bunları export etmek.
-  Son düzenlenme: 30/01/2021
-  Son düzenleyen: berk selvi
-*/
+/**
+ * @file Create store for redux, create redux persist and export them
+ * @author Berk selvi
+ * @license Apache-2.0
+ */
 import { createStore, applyMiddleware } from 'redux'
 import logger from 'redux-logger'
 import rootReducer from './rootReducer'
 import { persistStore, persistReducer } from 'redux-persist';
 import AsyncStorage from '@react-native-community/async-storage';
 
-// Kalıcı state için config.
+/**
+ * Configuration for redux-persist.
+ */
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
@@ -22,20 +24,25 @@ const persistConfig = {
   ],
 };
 
-// Root reducer ve Persist configleri birleştirildi.
+/**
+ * Combined root reducer and redux-persist configurations
+ */
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-// Store oluşturuldu.
+/**
+ * Store was created
+ */
 const store = createStore(
   persistedReducer,
   applyMiddleware(logger)
 );
 
-// Store kalıcı state için persiste gönderildi.
+/**
+ * Store given to the persist.
+ */
 let persistor = persistStore(store);
 
 
-// Export işlemi yapıldı.
 export {
   store,
   persistor

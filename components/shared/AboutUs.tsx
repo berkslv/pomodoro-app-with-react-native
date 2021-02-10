@@ -1,3 +1,8 @@
+/**
+ * @file It's used inside Settings component. It's contains application informations.
+ * @author Berk selvi
+ * @license Apache-2.0
+ */
 import { Ionicons } from '@expo/vector-icons'
 import React, { useState } from 'react'
 import { Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
@@ -35,9 +40,11 @@ const AboutUs = () => {
                 </TouchableOpacity>
             </View>
             
+            {/* This Text is no longer using it.
             <Text style={[styles.textFooter,{color:themeColor.ABOUT_US_FOOTER}]}>
               {I18n.t("about_us_body")}            
-            </Text>
+            </Text> 
+            */}
       </View>
     )
 }
@@ -56,6 +63,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",
+    paddingVertical: responsiveScreenHeight(1.5), // 10
   },
   textTitle: {
     flex: 1,

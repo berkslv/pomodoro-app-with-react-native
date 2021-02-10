@@ -1,11 +1,15 @@
-// Japonca - japonya
+/**
+ * @file Language settings for Japanese - Japan
+ * @author Berk selvi
+ * @license Apache-2.0
+ */
 
 const ja = {
     // navigation
     pomodoro:"ポモドーロ",
     settings:"設定",
     // cards
-    work_please:"少し作業しましょう。", // "let's work a little bit." because normally is too long
+    work_please:"働こう", 
     minutes:"分",
     hours:"時間",
     // button
@@ -21,7 +25,7 @@ const ja = {
     daily_gaol:"毎日の目標",
     // about us
     about_us:"私たちに関しては",
-    about_us_title:"このプロジェクトはオープンソースです。 ご希望の場合は、私たちをレビューして貢献することができます。",
+    about_us_title:"このプロジェクトはオープンソースです。 必要に応じて、ソースコードを確認するか、投稿してください。",
     about_us_body:"私たちはオープンソースであるため、2番目の計画に収益を上げていますが、アプリの存続のための広告があります。 ただし、これを最も快適な方法で提示しようとしています。",
     // notification badge
     notify_work_title:"作業が完了しました",

@@ -1,13 +1,13 @@
-/*
-  Amaç: Pomodoro ekranı.
-  Son düzenlenme: 30/01/2021
-  Son düzenleyen: berk selvi
-*/
+/**
+ * @file Screen for timer (pomodoro) component.
+ * @author Berk selvi
+ * @license Apache-2.0
+ */
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 
 import Timer from '../components/Timer';
-import { Text, View } from '../components/Themed';
+import { View } from '../components/Themed';
 
 export default function PomodoroScreen() {
   return (

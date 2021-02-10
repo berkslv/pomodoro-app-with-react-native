@@ -1,8 +1,8 @@
-/*
-  Amaç: Bu değişkenler dark-ligt temaya göre renk belirlemek için kullanılır.
-  Son düzenlenme: 30/01/2021
-  Son düzenleyen: berk selvi
-*/
+/**
+ * @file These variables are used to determine the color according to the dark or light theme.
+ * @author Berk selvi
+ * @license Apache-2.0
+ */
 const tintColorLight = '#2f95dc';
 const tintColorDark = '#fff';
 

@@ -1,12 +1,11 @@
-/*
-  Amaç: Eğer navigasyon ile root screen bulunamaz bir hata oluşursa bu component devreye girecektir.
-  Son düzenlenme: 30/01/2021
-  Son düzenleyen: berk selvi
-*/
+/**
+ * @file Screen for error catching. 
+ * @author Berk selvi
+ * @license Apache-2.0
+ */
 import { StackScreenProps } from '@react-navigation/stack';
 import * as React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-
 import { RootStackParamList } from '../types';
 
 export default function NotFoundScreen({

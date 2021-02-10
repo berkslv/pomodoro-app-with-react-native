@@ -1,18 +1,24 @@
 # Pomodoro App with React Native
-Bu proje Google Play ve App Store üzerinde kişisel olarak kullanacak güzel bir pomodoro uygulaması bulamadığım için oluşturulmuş, Pomodoro sayesinde çalışma sürelerini daha iyi organize etme ve daha verimli işler ortaya çıkartma fikrinin motivasyonu sayesinde geliştirilmektedir. 
-<br/><br />
-Projenin yapım aşaması bittikten sonra ilk olarak Play Store, eğer ilgi gelirse App Store üzerinde yayınlama işlemi yapılacaktır. Yayınlanırken geliştirme çabalarının karşılığı olarak reklam eklenerek marketlerde yayınlanacaktır.
+The reason this project was developed is that I cannot find a nice pomodoro app that I can personally use on Google Play and the App Store.
+<br/> 
 
-## Yol haritası - Todo
-[TODO.md](./TODO.md)
-
-## Kurulum
-Basitçe aşağıdaki komut yardımcı olacaktır.
+## Installation
+First, install dependencies.
 ```
 npm install
 ```
-## <img height="18" width="40" src="https://raw.githubusercontent.com/hjnilsson/country-flags/master/svg/gb.svg"> English? 
-English language support will be added soon. :(
+<br/>
 
-## Proje durumu
-Geliştirilmekte.
+Second, install expo-cli globally.
+```
+sudo npm install -g expo-cli
+```
+<br/>
+
+Third, run the application.
+```
+expo start
+```
+
+## Useful links
+Google Play (will be added)

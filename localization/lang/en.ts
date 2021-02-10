@@ -1,11 +1,15 @@
-// ingilizce - amerika
+/**
+ * @file Language settings for English - USA
+ * @author Berk selvi
+ * @license Apache-2.0
+ */
 
 const en = {
     // navigation
     pomodoro:"Pomodoro",
     settings:"Settings",
     // cards
-    work_please:"This place looks so deserted.",
+    work_please:"Let's study",
     minutes:"minutes",
     hours:"hours",
     // button
@@ -21,7 +25,7 @@ const en = {
     daily_gaol:"Daily goal",
     // about us
     about_us:"About Us",
-    about_us_title:"This project is open source. If you wish, you can review us and contribute.",
+    about_us_title:"This project is open source. If you wish, you can review our source code or contribute to us.",
     about_us_body:"As we are open source, we put revenue on the 2nd plan, but we have ads for app survival. However, we are trying to present this in the most comfortable way.",
     // notification badge
     notify_work_title:"Work is completed",

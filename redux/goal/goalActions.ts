@@ -1,11 +1,14 @@
-/*
-  Amaç: Günlük pomodoro hedefi ve pomodoro felsefesinin bir parçası olan çalışmaları küçük parçalara
-        bölme işlmeindeki küçük parça hedefi için actions tanımlandı.
-  Son düzenlenme: 30/01/2021
-  Son düzenleyen: berk selvi
-*/
+/**
+ * @file Actions created for the user's goal.
+ * @author Berk selvi
+ * @license Apache-2.0
+ */
 import { goalTypes } from "./goalTypes";
 
+/**
+ * Set user's daily goal.
+ * @param {number} goalDaily 
+ */
 export const setGoalDaily = (goalDaily:number) => {
     return {
         type : goalTypes.SET_DAILY_GOAL,
@@ -13,6 +16,10 @@ export const setGoalDaily = (goalDaily:number) => {
     }
 }
 
+/**
+ * Set user's little goal.
+ * @param {number} goalLittle 
+ */
 export const setGoalLittle = (goalLittle:number) => {
     return {
         type : goalTypes.SET_LITTLE_GOAL,

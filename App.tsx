@@ -1,7 +1,11 @@
+/**
+ * @file Heart of the application.
+ * @author Berk selvi
+ * @license Apache-2.0
+ */
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-// Redux imports
 import { store, persistor } from "./redux/store";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";

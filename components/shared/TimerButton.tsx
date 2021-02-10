@@ -1,8 +1,8 @@
-/*
-  Amaç: Timer.tsx içerisinde, Kontrol butonu olarak kullanılıyor.
-  Son düzenlenme: 02/02/2021
-  Son düzenleyen: berk selvi
-*/
+/**
+ * @file It's used inside Timer component. It's a control button.
+ * @author Berk selvi
+ * @license Apache-2.0
+ */
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { START, PAUSE, CANCEL, RESUME, DISABLE } from "../../constants/ButtonTypes";

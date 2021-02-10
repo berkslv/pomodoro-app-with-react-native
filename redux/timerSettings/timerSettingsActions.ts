@@ -1,11 +1,14 @@
-/*
-  Amaç: Çalışma, kısa mola, uzun mola sürelerini set etmek.
-  Son düzenlenme: 30/01/2021
-  Son düzenleyen: berk selvi
-*/
+/**
+ * @file Actions were created for timer settings.
+ * @author Berk selvi
+ * @license Apache-2.0
+ */
 import { timerSettingsTypes } from "./timerSettingsTypes";
 
-// Çalışma süresi için Action tanımlandı. 
+/**
+ * Set work time.
+ * @param {any} durationWork 
+ */
 export const setDurationWork = ( durationWork:any ) => {
     return {
         type : timerSettingsTypes.SET_WORK_TIME,
@@ -13,7 +16,10 @@ export const setDurationWork = ( durationWork:any ) => {
     }
 }
 
-// Kısa mola süresi için Action tanımlandı. 
+/**
+ * Set short break time.
+ * @param {any} durationShortBreak 
+ */
 export const setDurationShortBreak = ( durationShortBreak:any ) => {
     return {
         type : timerSettingsTypes.SET_SHORT_BREAK_TIME,
@@ -21,7 +27,10 @@ export const setDurationShortBreak = ( durationShortBreak:any ) => {
     }
 }
 
-// Uzun mola süresi için Action tanımlandı. 
+/**
+ * Set long break time.
+ * @param {any} durationLongBreak 
+ */
 export const setDurationLongBreak = ( durationLongBreak:any ) => {
     return {
         type : timerSettingsTypes.SET_LONG_BREAK_TIME,

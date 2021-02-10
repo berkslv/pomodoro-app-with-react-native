@@ -1,3 +1,8 @@
+/**
+ * @file Making notifications in a special hooks provides abstraction when using them within the application.
+ * @author Berk selvi
+ * @license Apache-2.0
+ */
 import React, { useEffect, useRef, useState } from 'react'
 import { Platform } from 'react-native'
 import * as Notifications from 'expo-notifications';
@@ -37,6 +42,9 @@ const useNotification = ({delayTime,notificationType}:any) => {
         };
     }, []);
 
+    /**
+     * Set notification badge for special action and language
+     */
     function notificationTypeHandler(){
         let title,body = "";
 
@@ -60,12 +68,16 @@ const useNotification = ({delayTime,notificationType}:any) => {
         schedulePushNotification({title:title,body:body});
     }
 
+    /**
+     * Send schedule notification.
+     */
     async function schedulePushNotification({title,body}:any){
         await Notifications.scheduleNotificationAsync({
             content: {
                 title: title,
                 body: body,
                 data: { data: 'goes here' },
+                sound :"default"
             },
             trigger: { seconds: delayTime },
         });

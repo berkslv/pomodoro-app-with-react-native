@@ -1,11 +1,14 @@
-/*
-  Amaç: Şuanki sayaç durumunu & süresini & değişim anahtarını belirlemek için action oluşturuldu.
-  Son düzenlenme: 30/01/2021
-  Son düzenleyen: berk selvi
-*/
+/**
+ * @file Actions created for the time's properties.
+ * @author Berk selvi
+ * @license Apache-2.0
+ */
 import { timerTypes } from "./timerTypes";
 
-// Şuanki sayacın kaç saniye olduğunu belirtmek için action.
+/**
+ * Set period for current timer.
+ * @param {number} period 
+ */
 export const setCurrentPeriod = ( period:number ) => {
     return {
         type : timerTypes.SET_CURRENT_PERIOD,
@@ -13,14 +16,21 @@ export const setCurrentPeriod = ( period:number ) => {
     }
 }
 
-// Şuanki sayacın durumunu belirtmek için action.
+/**
+ * Set status for current timer.
+ * @param {string} status 
+ */
 export const setCurrentStatus = ( status:string ) => {
     return {
         type : timerTypes.SET_CURRENT_STATUS,
         payload : status
     }
 }
-// Şanki sayacın aktiflik durumunu belirtmek için action.
+
+/**
+ * Set current activity for timer.
+ * @param {boolean} activity 
+ */
 export const setCurrentActivity = ( activity:boolean ) => {
     return {
         type : timerTypes.SET_CURRENT_ACTIVITY,
@@ -28,7 +38,10 @@ export const setCurrentActivity = ( activity:boolean ) => {
     }
 }
 
-// Bağımlılık anahtarı için action.
+/**
+ * Set dependency key to reset timer.
+ * @param {number} currentKey 
+ */
 export const setTimerKey = ( currentKey:number ) => {
     return {
         type : timerTypes.SET_TIMER_KEY,

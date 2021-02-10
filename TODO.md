@@ -17,10 +17,16 @@
   - [x] SettingInput componentini düzenle, düzgün birşeyler yap.
 - [x] Bildirim ver.
   - [x] Bildirim, uygulama açıkken alınmayacak, sadece arka planda çalışırken alınacak.
-  - [ ] Bildirim sesini default olarak sistemden al.
+  - [x] Bildirim sesini default olarak sistemden al.
 - [x] Andorid tasarıma uyumlu, ekran genişlikleriyle uygun olacak şekilde Responsive tasarım işle.
 - [x] Yabancı dil desteği ekle.
   - [x] Yabancı dillerin font büyüklük uyumluluklarını kontrol et.
   - [ ] Bir sonraki sürümlerde pomodoro ve settings isimlerinide çeviri olarak al.
+- [x] Icon tasarla ve dene.
 - [ ] Yayınla.
 - [ ] v2 gibi reklam ekle.
+
+Simple and user-friendly Pomodoro timer
+
+Don't worry about details, just focus on what you're doing.
+You don't have to worry about your privacy either, as we're open source. You will also be exposed to advertisements as low as possible.

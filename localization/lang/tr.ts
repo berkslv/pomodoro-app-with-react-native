@@ -1,4 +1,9 @@
-// türkçe - türkiye
+/**
+ * @file Language settings for Turkish - turkey
+ * @author Berk selvi
+ * @license Apache-2.0
+ */
+
 
 const tr = {
     // navigation
@@ -7,7 +12,7 @@ const tr = {
     // cards
     minutes:"dakika",
     hours:"saat",
-    work_please:"Burası çok ıssız görünüyor.",
+    work_please:"Hadi çalışalım",
     // button
     cancel:"İptal",
     start:"Başla",

@@ -1,11 +1,10 @@
-/*
-  Amaç: Şuanlık işlevsiz. Settings ile değiştirilecek.
-  Son düzenlenme: 30/01/2021
-  Son düzenleyen: berk selvi
-*/
+/**
+ * @file Screen for settings component.
+ * @author Berk selvi
+ * @license Apache-2.0
+ */
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
-
 import Settings from '../components/Settings';
 import { View } from '../components/Themed';
 

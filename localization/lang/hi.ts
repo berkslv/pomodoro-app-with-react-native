@@ -1,11 +1,15 @@
-// hindi - hindistan
+/**
+ * @file Language settings for Hindi - India
+ * @author Berk selvi
+ * @license Apache-2.0
+ */
 
 const hi = {
     // navigation
     pomodoro:"पोमोडोरो",
     settings:"समायोजन",
     // cards
-    work_please:"यह जगह इतनी सुनसान दिखती है।",
+    work_please:"चलो पढ़ते हैं",
     minutes:"मिनट",
     hours:"घंटे",
     // button
@@ -21,7 +25,7 @@ const hi = {
     daily_gaol:"दैनिक लक्ष्य",
     // about us
     about_us:"हमारे बारे में",
-    about_us_title:"यह परियोजना खुला स्रोत है। यदि आप चाहें, तो आप हमारी समीक्षा कर सकते हैं और योगदान कर सकते हैं।",
+    about_us_title:"यह परियोजना खुला स्रोत है। यदि आप चाहें, तो आप हमारे स्रोत कोड की समीक्षा कर सकते हैं या हमारे लिए योगदान कर सकते हैं।",
     about_us_body:"जैसा कि हम खुले स्रोत हैं, हम दूसरी योजना पर राजस्व डालते हैं, लेकिन हमारे पास ऐप अस्तित्व के लिए विज्ञापन हैं। हालांकि, हम इसे सबसे आरामदायक तरीके से पेश करने की कोशिश कर रहे हैं।",
     // notification badge
     notify_work_title:"काम पूरा हुआ",

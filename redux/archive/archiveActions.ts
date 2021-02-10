@@ -1,20 +1,23 @@
-/*
-  Amaç: Çalışma, kısa mola, uzun mola olarak kaç adet yapılmış, bunlar tarih tabanında veritabanı 
-        mantığında tutmak için gerekli action lar oluşturuldu.
-  Son düzenlenme: 30/01/2021
-  Son düzenleyen: berk selvi
-*/
+/**
+ * @file Actions created for the database-like archive
+ * @author Berk selvi
+ * @license Apache-2.0
+ */
 import { archiveTypes } from "./archiveTypes";
 
-// Çalışma adeti için Action tanımlandı. 
-export const completedWork = () => {
+/**
+ * Add 1 work done.
+ */
+export const completedWork = (time:number) => {
     return {
         type : archiveTypes.WORK_COMPLETED,
-        payload : { date: new Date() }
+        payload : { date: new Date(), time:time}
     }
 }
 
-// Kısa mola adeti için Action tanımlandı. 
+/**
+ * Add 1 short break done.
+ */
 export const completedShortBreak = () => {
     return {
         type : archiveTypes.SHORT_BREAK_COMPLETED,
@@ -22,7 +25,9 @@ export const completedShortBreak = () => {
     }
 }
 
-// Uzun mola adeti için Action tanımlandı. 
+/**
+ * Add 1 long break done.
+ */
 export const completedLongBreak = () => {
     return {
         type : archiveTypes.LONG_BREAK_COMPLETED,

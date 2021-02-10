@@ -1,11 +1,15 @@
-// Portekizce - portekiz
+/**
+ * @file Language settings for Portuguese - Portugal
+ * @author Berk selvi
+ * @license Apache-2.0
+ */
 
 const pt = {
     // navigation
     pomodoro:"Pomodoro",
     settings:"Definições",
     // cards
-    work_please:"Este lugar parece tão deserto.",
+    work_please:"Vamos estudar",
     minutes:"minutos",
     hours:"horas",
     // button
@@ -21,7 +25,7 @@ const pt = {
     daily_gaol:"meta diária",
     // about us
     about_us:"Sobre nós",
-    about_us_title:"Este projeto é de código aberto. Se desejar, você pode nos avaliar e contribuir.",
+    about_us_title:"Este projeto é de código aberto. Se desejar, você pode revisar nosso código-fonte ou contribuir conosco.",
     about_us_body:"Como somos open source, colocamos receita no segundo plano, mas temos anúncios para sobrevivência do app. No entanto, estamos tentando apresentar isso da maneira mais confortável.",
     // notification badge
     notify_work_title:"Trabalho concluído",

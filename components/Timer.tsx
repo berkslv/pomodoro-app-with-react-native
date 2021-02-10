@@ -1,11 +1,11 @@
-/*
-  Amaç: Uygulamanın yürütüldüğü ana component. Neredeyse çoğu işlem 
-        buradan yapılıyor, pomodoro uygulaması buradan kullanıcıya sunuluyor.
-  Son düzenlenme: 02/02/2021
-  Son düzenleyen: berk selvi
-*/
-import React, { useState, useRef, useEffect } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Platform } from "react-native";
+/**
+ * @file The main component on which the application is executed. Almost most of the 
+ *  operations are done here, the pomodoro application is offered to the user from here.
+ * @author Berk selvi
+ * @license Apache-2.0
+ */
+import React, { useState } from "react";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 import { connect } from "react-redux";
 import {
@@ -64,8 +64,11 @@ const Counter = ({
   const [buttonCondition_Left, setButtonCondition_Left] = useState(DISABLE);
   const [counterColor, setCounterColor] = useState(themeColor.TIMER_WORK);
   
-  // Sayacın kontrol düğmelerinden parametre alarak işlemlere karar veriliyor. const olarak ifade geri dönüyor. 
-  // Örnek olarak eğer switch CANCEL girerse CANCEL düğmesine basılmıştır.
+  /**
+   * Operations are decided by taking parameters from the timer buttons of the timer. 
+   * For instance, if the switch enters CANCEL, the CANCEL button has been pressed.
+   * @param {string} currentCondition 
+   */
   const buttonPressHandler = (currentCondition: string) => {
     switch (currentCondition) {
       case CANCEL:
@@ -75,8 +78,10 @@ const Counter = ({
         setButtonCondition_Left(DISABLE);
         break;
       case START:
-        sendNotification();
-
+        // Send schedule notification when START button is pressed.
+        if (currentPeriod != 0) {
+          sendNotification();
+        }
         setCurrentActivity(true);
         setButtonCondition_Right(PAUSE);
         setButtonCondition_Left(CANCEL);
@@ -93,73 +98,52 @@ const Counter = ({
     }
   };
 
-  // Sayaç tamamlandığı zaman işliyor. Sayaç componentinin içerisinden çağırılıyor.
+  /**
+   * This function works when the counter is completed. Calling from inside the counter component.
+   */
   const counterCompleted = () => {
     if (currentPeriod == durationWork && ((workDB.length + 1) % goalLittle != 0 || workDB.length == 0)) {
-      // WORK bitti. SHORT_BREAK sıraya alındı.
-
-      // Reducer içerisinde workDB değişkenine yazıldı.
-      completedWork();
-      
-      // Sayacın durumu ve süresi güncellendi.
+      // WORK is done. SHORT_BREAK queued.
+      completedWork(currentPeriod);
       setCurrentStatus(pomodoroTypes.SHORT_BREAK);
       setCurrentPeriod(durationShortBreak);
-
-      // Tasarımla ilgili güncelleme. Sayacın rengi değiştirildi.
       setCounterColor(themeColor.SHORT_BREAK);
     } else if (currentPeriod == durationWork && (workDB.length + 1) % goalLittle == 0 && workDB.length != 0) {
-      // WORK bitti. LONG_BREAK sıraya alındı.
-
-      // Reducer içerisinde workDB değişkenine ekleme yapıldı.
-      completedWork();
-
-      // Sayacın durumu ve süresi güncellendi.
+      // WORK is done. LONG_BREAK queued.
+      completedWork(currentPeriod);
       setCurrentStatus(pomodoroTypes.LONG_BREAK);
       setCurrentPeriod(durationLongBreak);
-
-      // Tasarımla ilgili güncelleme, Sayacın rengi değiştirildi.
       setCounterColor(themeColor.LONG_BREAK);
     } else if (currentPeriod == durationShortBreak) {
-      // SHORT_BREAK bitti. WORK sıraya alındı.
-
-      // Reducer içerisinde shortBreakDB değişkenine ekleme yapıldı.
+      // SHORT_BREAK is done. WORK queued.
       completedShortBreak();
-
-      // Sayacın durumu ve süresi güncellendi.
       setCurrentStatus(pomodoroTypes.WORK);
       setCurrentPeriod(durationWork);
-
-      // Tasarımla ilgili güncelleme, Sayacın rengi değiştirildi.
       setCounterColor(themeColor.TIMER_WORK);
     } else if (currentPeriod == durationLongBreak) {
-      // LONG_BREAK bitti. WORK sıraya alındı.
-
-      // Reducer içerisinde longBreakDB değişkenine ekleme yapıldı.
+      // LONG_BREAK is done. WORK queued.
       completedLongBreak();
-
-      // Sayacın durumu ve süresi güncellendi.
       setCurrentStatus(pomodoroTypes.WORK);
       setCurrentPeriod(durationWork);
-
-      // Tasarımla ilgili güncelleme, Sayacın rengi değiştirildi.
       setCounterColor(themeColor.TIMER_WORK);
     } else {
-      // Herhangi bir hata oluşursa bildirildi.
+      // Any errors are reported.
       console.error("An error occur when counter completed");
       setCounterColor(themeColor.ERROR);
     }
 
-    // Sayacı sıfırlamak için paketle ilgili bir özellik. Sayacı sıfırlamak için bu değeri değiştirmemiz gerekiyor.
     setTimerKey(timerKey + 1);
-    // Sayacı pasif hale getiriyoruz.
     setCurrentActivity(false);
-    // Sağdaki butonu START yapıyoruz.
+    // We are making the button on the right START.
     setButtonCondition_Right(START);
-    // Solcaki butonu DISABLE yapıyoruz.
+    // We are making the button on the left DISABLE.
     setButtonCondition_Left(DISABLE);
   };
 
-  // Sayacın içerisinde gözüken süreyi formatlıyoruz. CountdownCircleTimer içerisinde çağırıyoruz.
+  /**
+   * Format the time that appears in the counter. We call it in the CountdownCircleTimer.
+   * @param {any} remainingTime 
+   */
   const countdownTimeFormater = (remainingTime: any) => {
     let minutes = Math.floor(remainingTime / 60).toString();
     let seconds = (remainingTime % 60).toString();
@@ -170,44 +154,45 @@ const Counter = ({
     return `${minutes}:${seconds}`;
   };
 
-  // Ekrandaki bugün içerisindeki çalışma süresini belirten kartı formatlıyoruz.
+  /**
+   * Format the card that indicates the working time in today on the screen.
+   */
   const screenTimeFormater = () => {
     let totalMinute = 0;
 
-      // Sadece bugüne ait verileri alıyoruz.
     workDB.forEach(( item:any ) => {
       if( item.date.toDateString() == new Date().toDateString() )
       {
-        // totalMinute += durationWork;
-        totalMinute += 25; // test için varım. İşlerin bitince bir üstteki kodu aç beni sil.
+        totalMinute += item.time;
       }
     });
 
-    let hour = Math.floor(totalMinute / 60).toString();
-    let minute = (totalMinute % 60).toString();
+    let hour = Math.floor(totalMinute / 3600).toString();
+    let minute = (totalMinute / 60).toString();
 
-    // formatTime değişkeni userInterface reducer içerisinden geliyor. Kartın üzerine tıklanarak güncelleniyor.
+    // The formatTime variable comes from the userInterface reducer. It is updated by clicking on the card.
     if (formatTime == 0) {
       if (hour == "0") {
         if (minute == "0") {
           return I18n.t("work_please");  
+        }else{
+          return `${minute} ${I18n.t("minutes")}`;
         }
-
-        return minute + " " + I18n.t("minutes");
       } else {
-        return hour + " " + I18n.t("hours") + " " + minute + " " + I18n.t("minutes");
+        return `${hour} ${I18n.t("hours")} ${minute} ${I18n.t("minutes")}`;
       }
     } else {
-      return Math.floor(totalMinute) + " " + I18n.t("minutes");
+      return `${minute} ${I18n.t("minutes")}`;
     }
   };
 
-  // Ekrandaki bugün içerisindeki yapılan ve yapılacak olan hedefi belirten kartı formatlıyoruz.
+  /**
+   * We format the card on the screen, indicating the goal that is done and will be done today.
+   */
   const screenTargetFormater = () => {
-    // formatTarget değişkeni userInterface reducer içerisinden geliyor. Kartın üzerine tıklanarak güncelleniyor.
+    // The formatTarget variable comes from the userInterface reducer. It is updated by clicking on the card.
     let completedWork = 0;
 
-    // Sadece bugüne ait verileri alıyoruz.
     workDB.forEach(( item:any ) => {
       if( item.date.toDateString() == new Date().toDateString() )
       {
@@ -216,7 +201,7 @@ const Counter = ({
     });
 
     if (formatTarget == 0) {
-      return completedWork + ` / ${goalDaily}`;
+      return `${completedWork} / ${goalDaily}`;
     } else {
       return completedWork;
     }
@@ -228,7 +213,7 @@ const Counter = ({
         <CountdownCircleTimer
           isPlaying={currentActivity}
           duration={currentPeriod}
-          size={responsiveScreenWidth(75)} // 270
+          size={responsiveScreenWidth(75)} // 270  | pixel 7 & pixel 10 responsiveScreenFontSize(30) | 
           key={timerKey}
           colors={counterColor}
           onComplete={() => {
@@ -275,7 +260,6 @@ const Counter = ({
   );
 };
 
-// redux için state değişkenlerini map ediyoruz.
 const mapStateToProps = (state: any) => {
   return {
     workDB: state.archive.workDB,
@@ -299,10 +283,9 @@ const mapStateToProps = (state: any) => {
   };
 };
 
-// redux için fonksiyonları map ediyoruz.
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    completedWork: () => dispatch(completedWork()),
+    completedWork: (time: number) => dispatch(completedWork(time)),
     completedShortBreak: () => dispatch(completedShortBreak()),
     completedLongBreak: () => dispatch(completedLongBreak()),
 
@@ -316,7 +299,6 @@ const mapDispatchToProps = (dispatch: any) => {
   };
 };
 
-// redux bağlantısı kuruyoruz.
 export default connect(mapStateToProps, mapDispatchToProps)(Counter);
 
 
@@ -328,7 +310,7 @@ const styles = StyleSheet.create({
   },
   countdownContainer: {
     position: "absolute",
-    top: responsiveScreenHeight(2), // 10
+    top: responsiveScreenFontSize(2), // 10
   },
   countdownTextContainer: {
     flex: 1,

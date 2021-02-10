@@ -1,11 +1,16 @@
-// çince - mandarin
+/**
+ * @file Language settings for Chinese - China
+ * @author Berk selvi
+ * @license Apache-2.0
+ */
+
 
 const zh = {
     // navigation
     pomodoro:"番茄",
     settings:"设定",
     // cards
-    work_please:"这个地方看起来很冷清。",
+    work_please:"来学习吧",
     minutes:"分钟",
     hours:"小时",
     // button
@@ -21,7 +26,7 @@ const zh = {
     daily_gaol:"每日目标",
     // about us
     about_us:"关于我们",
-    about_us_title:"该项目是开源的。 如果您愿意，您可以查看我们并做出贡献。",
+    about_us_title:"该项目是开源的。 如果您愿意，可以查看我们的源代码或为我们做贡献。",
     about_us_body:"由于我们是开源的，因此我们将收入放在了第二个计划上，但是我们有用于生存应用的广告。 但是，我们正在尝试以最舒适的方式进行介绍。",
     // notification badge
     notify_work_title:"工作完成",

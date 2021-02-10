@@ -1,3 +1,8 @@
+/**
+ * @file Timer settings are handled here.
+ * @author Berk selvi
+ * @license Apache-2.0
+ */
 import React, { useRef, useState } from "react";
 import {
   StyleSheet,
@@ -17,7 +22,6 @@ import {
   setCurrentPeriod,
 } from "../redux";
 import { connect } from "react-redux";
-import { Formik } from "formik"; // DO npm uninstall formik
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { pomodoroTypes } from "../constants/PomodoroTypes";
 import AboutUs from "./shared/AboutUs";
@@ -59,12 +63,6 @@ const Settings = ({
   const goalLittleRef: any = useRef(null);
   const goalDailyRef: any = useRef(null);
 
-  /* 
-  useEffect(() => {
-    console.error(I18n.t("hello"));
-  }, []) 
-  */
-
   const focusEvent = (ref: any) => {
     if (ref.current) {
       ref.current.focus();
@@ -76,53 +74,94 @@ const Settings = ({
     setCurrentActivity(false);
   };
 
+  const regControl = (val:any) => {
+    // Regex for only numbers and empty string
+    let reg = /^(\s*|\d+)$/;
+    return reg.exec(val);
+  }
+
   const workTime_changeHandler = (value: any) => {
     resetTimer();
 
-    if (value != "") {
-      setDurationWork(parseInt(value));
-      if (currentStatus == pomodoroTypes.WORK) {
-        setCurrentPeriod(parseInt(value));
+    if (regControl(value)) {
+
+      if (value != "") {
+        value = value * 60;
+        setDurationWork(parseInt(value));
+        if (currentStatus == pomodoroTypes.WORK) {
+          setCurrentPeriod(parseInt(value));
+        }
+      } else {
+        setDurationWork(value);
+        if (currentStatus == pomodoroTypes.WORK) {
+          setCurrentPeriod(value);
+        }
       }
-    } else {
-      setDurationWork(value);
-      if (currentStatus == pomodoroTypes.WORK) {
-        setCurrentPeriod(value);
-      }
+
     }
   };
 
   const shortBreak_changeHandler = (value: any) => {
     resetTimer();
 
-    if (value != "") {
-      setDurationShortBreak(parseInt(value));
-      if (currentStatus == pomodoroTypes.SHORT_BREAK) {
-        setCurrentPeriod(parseInt(value));
+    if (regControl(value)) {
+      
+      if (value != "") {
+        value = value * 60;
+        setDurationShortBreak(parseInt(value));
+        if (currentStatus == pomodoroTypes.SHORT_BREAK) {
+          setCurrentPeriod(parseInt(value));
+        }
+      } else {
+        setDurationShortBreak(value);
+        if (currentStatus == pomodoroTypes.SHORT_BREAK) {
+          setCurrentPeriod(value);
+        }
       }
-    } else {
-      setDurationShortBreak(value);
-      if (currentStatus == pomodoroTypes.SHORT_BREAK) {
-        setCurrentPeriod(value);
-      }
+
     }
   };
 
   const longBreak_changeHandler = (value: any) => {
     resetTimer();
 
-    if (value != "") {
-      setDurationLongBreak(parseInt(value));
-      if (currentStatus == pomodoroTypes.LONG_BREAK) {
-        setCurrentPeriod(parseInt(value));
+    if (regControl(value)) {
+      
+      if (value != "") {
+        value = value * 60;
+        setDurationLongBreak(parseInt(value));
+        if (currentStatus == pomodoroTypes.LONG_BREAK) {
+          setCurrentPeriod(parseInt(value));
+        }
+      } else {
+        setDurationLongBreak(value);
+        if (currentStatus == pomodoroTypes.LONG_BREAK) {
+          setCurrentPeriod(value);
+        }
       }
-    } else {
-      setDurationLongBreak(value);
-      if (currentStatus == pomodoroTypes.LONG_BREAK) {
-        setCurrentPeriod(value);
-      }
+
     }
   };
+
+  const littleGoal_changeHandler = (value:any) => {
+    
+    if (regControl(value)) {
+
+      setGoalLittle(value);
+
+    }
+
+  }
+
+  const dailyGoal_changeHandler = (value:any) => {
+
+    if (regControl(value)) {
+
+      setGoalDaily(value);
+
+    }
+
+  }
 
   return (
     <ScrollView
@@ -141,7 +180,7 @@ const Settings = ({
             ref={workTimeRef}
             style={[styles.input,{color: themeColor.SETTINGS_INPUT}]}
             placeholder={I18n.t("work_time")}
-            value={durationWork.toString()}
+            value={(durationWork / 60).toString()}
             onChangeText={(e) => {
               workTime_changeHandler(e);
             }}
@@ -163,7 +202,7 @@ const Settings = ({
             onChangeText={(e) => {
               shortBreak_changeHandler(e);
             }}
-            value={durationShortBreak.toString()}
+            value={(durationShortBreak / 60).toString()}
             keyboardType="number-pad"
             selectTextOnFocus
           />
@@ -182,7 +221,7 @@ const Settings = ({
             onChangeText={(e) => {
               longBreak_changeHandler(e);
             }}
-            value={durationLongBreak.toString()}
+            value={(durationLongBreak / 60).toString()}
             keyboardType="number-pad"
             selectTextOnFocus
           />
@@ -203,7 +242,7 @@ const Settings = ({
             placeholder={I18n.t("little_goal")}
             value={goalLittle.toString()}
             onChangeText={(e) => {
-              setGoalLittle(e);
+              littleGoal_changeHandler(e)
             }}
             keyboardType="number-pad"
             selectTextOnFocus
@@ -221,7 +260,7 @@ const Settings = ({
             style={[styles.input,{color: themeColor.SETTINGS_INPUT}]}
             placeholder={I18n.t("daily_gaol")}
             onChangeText={(e) => {
-              setGoalDaily(e);
+              dailyGoal_changeHandler(e);
             }}
             value={goalDaily.toString()}
             keyboardType="number-pad"
@@ -235,7 +274,6 @@ const Settings = ({
   );
 };
 
-// redux için state değişkenlerini map ediyoruz.
 const mapStateToProps = (state: any) => {
   return {
     durationWork: state.timerSettings.durationWork,
@@ -250,7 +288,6 @@ const mapStateToProps = (state: any) => {
   };
 };
 
-// redux için fonksiyonları map ediyoruz.
 const mapDispatchToProps = (dispatch: any) => {
   return {
     setDurationWork: (durationWork: any) =>
@@ -270,7 +307,6 @@ const mapDispatchToProps = (dispatch: any) => {
   };
 };
 
-// redux bağlantısı kuruyoruz.
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);
 
 const styles = StyleSheet.create({

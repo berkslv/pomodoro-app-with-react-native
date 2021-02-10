@@ -1,22 +1,18 @@
-/*
-  Amaç: Root navigasyon elementleri oluşturuldu. Temel yapıların ayrıntıları BottomTabNavigator.tsx 
-        içerisinde yapılıyor.
-  Son düzenlenme: 30/01/2021
-  Son düzenleyen: berk selvi
-  React navigation docs: https://reactnavigation.org/docs/getting-started
-  Stack navigation docs: https://reactnavigation.org/docs/modal
-*/
+/**
+ * @file Created basic navigation options.
+ * @author Berk selvi
+ * @license Apache-2.0
+ */
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import { ColorSchemeName } from 'react-native';
-
 import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList } from '../types';
 import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 
-// React navigation için temel yapı oluşturuldu.
+// Basic navigation component created for react navigation.
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
     <NavigationContainer
@@ -27,10 +23,10 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
   );
 }
 
-// Root stack navigator oluşturuldu. Bu modelleri diğer tüm içeriğin üstünde görüntülemek için kullanılır
+// Created root stack navigator.
 const Stack = createStackNavigator<RootStackParamList>();
 
-// Root olarak BottomTabNavigator a gider. Eğer bir hata olursa NotFoundScreen sayfasına yönlendirilir.
+// Goes to BottomTabNavigator. If there is a error goes to NotFoundScreen
 function RootNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>

@@ -1,9 +1,8 @@
-/*
-    Amaç: Redux altyapısından Action ları React ile görüştürmek
-    Son düzenlenme: 30/01/2021
-    Son düzenleyen: berk selvi
-*/
-// Actions lar export edildi.
+/**
+ * @file Different actions exported.
+ * @author Berk selvi
+ * @license Apache-2.0
+ */
 export * from './timerSettings/timerSettingsActions';
 export * from './timer/timerActions';
 export * from './goal/goalActions';

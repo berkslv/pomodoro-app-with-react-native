@@ -1,8 +1,8 @@
-/*
-  Amaç: Uygulama ekranlarını linkliyor ve navigasyon işlemlerini bu linkler ile yapıyoruz.
-  Son düzenlenme: 30/01/2021
-  Son düzenleyen: berk selvi
-*/
+/**
+ * @file We do the linking and navigation operations of the application screens with these links.
+ * @author Berk selvi
+ * @license Apache-2.0
+ */
 import * as Linking from 'expo-linking';
 
 export default {

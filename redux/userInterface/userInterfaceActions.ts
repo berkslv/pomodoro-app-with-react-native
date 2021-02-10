@@ -1,20 +1,26 @@
-/*
-  Amaç: Kullanıcı arayüzünden tercih edilebilen, farklı arayüz seçeneklerini set etmek için actions
-  Son düzenlenme: 30/01/2021
-  Son düzenleyen: berk selvi
-*/
+/**
+ * @file Actions were created for interface options.
+ * @author Berk selvi
+ * @license Apache-2.0
+ */
 import { userInterfaceTypes } from "./userInterfaceTypes";
 
-// Pomodoro ekranından sunulan geçmiş (1 günlük) çalışma süresini format etmek için action tanımlandı. H:D veya D olarak sunulabilir.
-export const setFormatTime = (formatTime:any) => {
+/**
+ * Set way the done pomodoro time is presented from the user interface.
+ * @param {number} formatTime 
+ */
+export const setFormatTime = (formatTime:number) => {
     return {
         type : userInterfaceTypes.SET_TIME_FORMAT,
         payload : formatTime,
     }
 }
 
-// Pomodoro ekranından sunulan kullanıcının hedefini belirten arayüzü format etmek için action tanımlandı. Hedef/Yapılan veya Yapılan olarak sunulabilir.
-export const setFormatTarget = (formatTarget:any) => {
+/**
+ * Set way the done pomodoro goal is presented from the user interface.
+ * @param {number} formatTarget 
+ */
+export const setFormatTarget = (formatTarget:number) => {
     return {
         type : userInterfaceTypes.SET_GOAL_FORMAT,
         payload : formatTarget,
