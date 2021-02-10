@@ -5,10 +5,10 @@ The reason this project was developed is that I cannot find a nice pomodoro app 
 <div style="text-align:center">
      <img src="./assets/release-images/image-dark-main.png"
           alt="Image dark - main" 
-          style="width:200px; padding-right:30px; padding-left:30px" />
+          style="width:100px; padding-right:30px; padding-left:30px" />
      <img src="./assets/release-images/image-dark-settings.png"
           alt="Image dark - settings" 
-          style="width:200px; padding-right:30px; padding-left:30px" />
+          style="width:100px; padding-right:30px; padding-left:30px" />
 </div>
 
 ## Installation
