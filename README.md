@@ -2,9 +2,16 @@
 The reason this project was developed is that I cannot find a nice pomodoro app that I can personally use on Google Play and the App Store.
 <br/> 
 
-<div style="margin:auto">
-![Image dark - main](./assets/release-images/image-dark-main.png)
-![Image dark - settings](./assets/release-images/image-dark-settings.png)
+<div style="text-align:center">
+     <img src="./assets/release-images/image-dark-main.png"
+          alt="Image dark - main" 
+          style="width:300px; height:620px; padding-right:30px; padding-left:30px" />
+     <img src="./assets/release-images/image-light-not-completed.png"
+          alt="Image light - main" 
+          style="width:300px; height:620px; padding-right:30px; padding-left:30px" />
+     <img src="./assets/release-images/image-dark-settings.png"
+          alt="Image dark - settings" 
+          style="width:300px; height:620px; padding-right:30px; padding-left:30px" />
 </div>
 
 ## Installation
