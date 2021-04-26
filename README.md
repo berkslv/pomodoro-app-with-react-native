@@ -30,4 +30,4 @@ expo start
 ```
 
 ## Useful links
-Google Play (will be added)
+[Google Play](https://play.google.com/store/apps/details?id=com.berkslv.pomodorocounterv2)
