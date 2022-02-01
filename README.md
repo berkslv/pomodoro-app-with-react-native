@@ -1,5 +1,7 @@
 # Pomodoro App with React Native
-The reason this project was developed is that I cannot find a nice pomodoro app that I can personally use on Google Play and the App Store.
+
+There are two reasons for developing this project. First, is a proof of concept. In this project, I use React Native, Redux and many other packages, although some packages provide more complex solutions to certain problems, I wanted to try those technologies. Second, I had a hard time finding a simple and just a pomodoro counter on Google Play.
+
 <br/> 
 
 <div>
