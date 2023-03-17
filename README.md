@@ -4,14 +4,8 @@ There are two reasons for developing this project. First, is a proof of concept.
 
 <br/> 
 
-<div>
-     <img src="./assets/release-images/image-dark-main.png"
-          alt="Image dark - main" 
-          />
-     <img src="./assets/release-images/image-dark-settings.png"
-          alt="Image dark - settings" 
-          />
-</div>
+![Mockup](./assets/release-images/mockup.png)
+
 
 ## Installation
 First, install dependencies.
